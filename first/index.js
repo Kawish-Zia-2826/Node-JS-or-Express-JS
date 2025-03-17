@@ -11,6 +11,7 @@ app.use(express.urlencoded({extended:false}))
 
 
 app.set('view engine','ejs')
+app.use(express.static('public'))
 // app.get("/about",(req,res)=>{
 
 //   res.redirect('/user')
@@ -46,7 +47,7 @@ app.set('view engine','ejs')
 
 // app.post('/post',(req,res)=>{res.send(req.body)})
 // app.get('/post',(req,res)=>{res.send(req.protocol)})
-app.post('/post',(req,res)=>{
+// app.post('/post',(req,res)=>{
 // if(req.accepts('html')){
 // res.send("<h1>hi</h1>")
 // }else if(req.accepts("json")){
@@ -60,26 +61,35 @@ app.post('/post',(req,res)=>{
 
 // res.send(req.get("host"))
 
-if(req.is('application/json')){
-  res.send("is valid")
-}else if (req.is('text/html')){
-res.send("is html")
-}else{
-  res.send("not supported")
-}
+// if(req.is('application/json')){
+//   res.send("is valid")
+// }else if (req.is('text/html')){
+// res.send("is html")
+// }else{
+//   res.send("not supported")
+// }
 
+// })
+
+// app.get("/ejs",(req,res)=>{
+//   var list = ['name','abdsfd','dsf']
+//   res.render(
+//     'ejs'
+//     ,{
+//       name:"kawihs",
+//       message:"thi is message",
+//       list
+//     })
+// })
+
+
+app.get('/form',(req,res)=>{
+res.render('form',{message:null})
 })
 
-app.get("/ejs",(req,res)=>{
-  var list = ['name','abdsfd','dsf']
-  res.render(
-    'ejs'
-    ,{
-      name:"kawihs",
-      message:"thi is message",
-      list
-    })
-})
 
-
-
+app.post('/submit',(req,res)=>{
+  let userName = req.body.uname;
+  // res.send(`succufully name is ${userName}`)
+  res.render('form',{message:userName})
+  })
