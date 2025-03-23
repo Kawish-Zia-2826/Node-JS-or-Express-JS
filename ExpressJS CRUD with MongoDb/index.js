@@ -37,9 +37,29 @@ app.get("/show-contact/:id", async(req, res) => {
 app.get("/add-contact", (req, res) => {
   res.render("add-contact.ejs");
 });
-app.post("/add-contact", (req, res) => {});
-app.get("/update-contact/:id", (req, res) => {
-  res.render("update-contact.ejs");
+app.post("/add-contact",async (req, res) => {
+  // const contact =await Contact.insertOne({
+  //   first_name: req.body.first_name,
+  //   last_name: req.body.last_name,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   address : req.body.address
+  // })
+  // {user_name,last_name,email,phone,address}=req.body
+  await Contact.create(req.body);
+  // res.send(req.body)
+
+  res.redirect("/");
 });
-app.post("/update-contact", (req, res) => {});
-app.get("/delete/:id", (req, res) => {});
+app.get("/update-contact/:id", async (req, res) => {
+  const contact = await Contact.findById(req.params.id);
+  res.render("update-contact.ejs",{contact});
+});
+app.post("/update-contact/:id", async(req, res) => {
+  await Contact.findByIdAndUpdate(req.params.id, req.body);
+  res.redirect("/");
+});
+app.get("/delete/:id", async(req, res) => {
+  await Contact.findByIdAndDelete(req.params.id);
+  res.redirect("/");
+});
