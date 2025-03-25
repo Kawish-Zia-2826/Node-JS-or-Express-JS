@@ -1,4 +1,5 @@
-const mongoose = require("mongoose"); // ✅ Fixed Spelling
+// const mongoose = require("mongoose"); // ✅ Fixed Spelling
+import  mongoose from "mongoose"; // ✅ Fixed Spelling
 
 const contactSchema = new mongoose.Schema({ // ✅ Use 'new' for Schema
   first_name: {
@@ -20,4 +21,5 @@ const contactSchema = new mongoose.Schema({ // ✅ Use 'new' for Schema
 
 const Contact = mongoose.model("Contact", contactSchema); // ✅ Capitalized model name
 
-module.exports = Contact; // ✅ Fixed Export
+// module.exports = Contact; 
+export default Contact;

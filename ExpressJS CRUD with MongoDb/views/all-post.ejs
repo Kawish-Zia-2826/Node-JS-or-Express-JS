@@ -24,17 +24,20 @@
                       <th scope="col">Last Name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Phone</th>
+                      <th scope="col">Address</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
+                    <% num = 1 %>
                     <% contact.forEach(element => { %>
                       <tr>
-                        <td><%= element._id %></td>
+                        <td><%= num++ %></td>
                         <td><%= element.first_name %></td>
                         <td><%= element.last_name %></td>
                         <td><%= element.email %></td>
                         <td><%= element.phone %></td>
+                        <td><%= element.address %></td>
                         
                         <td width="150">
                           <a href="/show-contact/<%= element._id %>" class="btn btn-sm btn-circle btn-outline-info" title="Show"><i class="fa fa-eye"></i></a>
