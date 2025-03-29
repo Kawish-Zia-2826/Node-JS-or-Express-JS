@@ -1,27 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <!-- <link rel="stylesheet" href="/style.css"> -->
-</head>
-<body>
-<form action="/create" method="post">
-  <input type="text" name="title" id="">
-  <input type="text" name="desc" id="">
-  <input type="submit" value="submit" name="submit" >
-</form>
+<%- include('../partials/header.ejs') %>
+<body class="bg-dark text-white">
+  <form action="/create" method="post">
+    <div class="mb-3">
+      <label for="title" class="form-label">Email address</label>
+      <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <label for="desc" class="form-label">Password</label>
+      <input type="text" class="form-control" name="desc" id="desc">
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>
+    <input type="submit" value="submit" class="btn btn-primary">
+  </form>
 
 <div>
   <% if (filee.length > 0) { %>
-    <% filee.forEach(val => { %>
-      <h1>This is file: <%= val %></h1>
+    <div class="row">
+   <% filee.forEach(val => { %>
+<div class="m-5 col-6" >
+  <p>
+ 
+    <%= val%>
+    <a href="/show/<%=val%>">show more</a><br>
+    <a href="/update/<%= val%>">update name of file</a>
+  </p>
+
+</div>
     <% }); %>
+</div>
   <% } else { %>
     <h1>No files found</h1>
   <% } %>
+
+
+
+
   
   </div>
+
+
+  
 </body>
 </html>

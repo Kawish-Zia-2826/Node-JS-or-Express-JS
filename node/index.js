@@ -14,7 +14,7 @@ try {
     // fs.mkdirSync(folderName);
     var filee  = fs.readdirSync(folderName);
 
-    console.log(filee);
+    // console.log(filee);
     
   }
 } catch (err) {
@@ -42,4 +42,43 @@ console.log(err);
 
 res.redirect('/');
 })
-app.listen(3000, () => console.log(` apppp listening on port port! 3000 /n http://localhost:port`));
+
+try {
+  app.get('/show/:filename', (req, res) => {
+   fs.readFile('files/'+req.params.filename,"utf-8",(err,data)=>{
+  res.send(`"file name is"+${req.params.filename}, ${data} <a href="/">back</a>`)
+  
+    
+   })
+  });
+} catch (error) {
+  console.log("error message",error.message);
+  
+}
+
+
+try {
+  app.get('/update/:oldname', (req, res) => {
+    res.render("update",{data:req.params.oldname})
+  });
+} catch (error) {
+  console.log(error);
+  
+}
+
+app.post('/update.name', (req, res) => {
+  fs.renameSync(`./files/${req.body.old_name}` ,`./files/${req.body.new_name}`,(err)=>{
+    console.log(err);
+    
+  })
+  
+  res.redirect('/')
+  // console.log(req.body);
+  
+});
+
+
+
+
+
+app.listen(3000, () => console.log(` apppp listening fon port port! 3000 /n http://localhost:port`));
