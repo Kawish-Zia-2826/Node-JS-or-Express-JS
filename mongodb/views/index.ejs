@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+  </head>
+  <body>
+
+    <% if(alluser.length > 0){ %>
+      <% alluser.forEach((val) => { %>
+        <div class="card" style="width: 18rem;">
+          <img src="<%= val.image %>" class="card-img-top" alt="..." width="200px">
+          <div class="card-body">
+            <h5 class="card-title"><%= val.name %></h5>
+            <p class="card-text"><%= val.email %></p>
+            <a href="/update/<%= val._id%>" class="btn btn-info">update</a>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No users</p>
+    <% } %>
+
+  </body>
+</html>
