@@ -84,7 +84,7 @@ app.get('/cokkie', (req, res) => {
 
 
 
- res.send("work")
+ res.send("this is working")
 //  console.log(req.cookies);
  
 });
