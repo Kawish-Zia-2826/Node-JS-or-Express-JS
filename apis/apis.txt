@@ -1,0 +1,35 @@
+install express nodemon router mongoose dotenv 
+require.env and config
+project setup 
+app.use(express.json())
+require mogoose
+mongoose.connect(url/database_name)
+make model folder
+require mongoose or express
+new mongoose.shema({
+name:{
+type:String, }
+})
+module.exports = mongoose.model("schema name",defined shema var)
+
+make routes folder
+require router  = express.Router()
+require model file
+router.get('/',async(req res)){
+model.find()
+res.json()
+}
+
+router.put
+model.findByIdAndUpdate(req.params.id,req.body,{new:true})
+
+router.post
+model.create(req.body)
+
+router.delete
+model.findeAndDelte(req.params.id)
+
+go to app.js
+require router
+app.use("/api",router)
+
