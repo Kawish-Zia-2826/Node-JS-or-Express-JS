@@ -4,11 +4,11 @@ const path = require("path");
 const mongoose = require("mongoose");
 const routers = require("./router/route");
 dotenv = require("dotenv").config();
+
 // Connect to MongoDB
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB connected"))
+.catch((err) => console.error("MongoDB connection error:", err));
 
 // middleware
 app.use(express.urlencoded({ extended: false }));

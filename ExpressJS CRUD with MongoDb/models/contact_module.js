@@ -1,5 +1,6 @@
 // const mongoose = require("mongoose"); // ✅ Fixed Spelling
 import  mongoose from "mongoose"; // ✅ Fixed Spelling
+import paginate from 'mongoose-paginate-v2';
 
 const contactSchema = new mongoose.Schema({ // ✅ Use 'new' for Schema
   first_name: {
@@ -18,6 +19,9 @@ const contactSchema = new mongoose.Schema({ // ✅ Use 'new' for Schema
     type: String,
   },
 });
+
+
+contactSchema.plugin(paginate);
 
 const Contact = mongoose.model("Contact", contactSchema); // ✅ Capitalized model name
 

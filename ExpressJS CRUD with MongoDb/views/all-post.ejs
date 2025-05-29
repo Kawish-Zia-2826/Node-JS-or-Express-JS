@@ -29,8 +29,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% num = 1 %>
-                    <% contact.forEach(element => { %>
+                    <% num =contact['pagingCounter'] %>
+                    <% contact['docs'].forEach(element => { %>
                       <tr>
                         <td><%= num++ %></td>
                         <td><%= element.first_name %></td>
@@ -50,6 +50,31 @@
                     
                   </tbody>
                 </table> 
+
+                <nav class="d-flex justify-content-center">
+                  <ul class="pagination">
+                    
+                    <%
+                    let btn = (contact['hasPrevPage']) ?"active":"disabled"
+                     %>
+                    <li class="page-item <%= btn%>">
+
+                      <a class="page-link  " href="/?page=<%= contact['prevPage']%>" tabindex="-1"> Previous</a>
+                    </li>
+                    <% for(let i=1;i<=contact['totalPages'];i++){%>
+                    <li class="page-item"><a class="page-link" href="/?page=<%= i%>"><%= i%></a></li>
+                    <%}%>
+
+                    <%
+                    let btn2 = contact['hasNextPage'] ?"active":"disabled"
+                      %>
+                    <li class="page-item <%= btn2%>">
+                      
+                      <a class="page-link" href="/?page=<%= contact['nextPage']%>">Next</a>
+                
+                      </li>
+                  </ul>
+                </nav>
               </div>
             </div>
           </div>

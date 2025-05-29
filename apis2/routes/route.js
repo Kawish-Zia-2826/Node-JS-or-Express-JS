@@ -30,7 +30,15 @@ const User = require('../modules/module');
 
 router.get('/', async (req, res) => {
     try {
-        const users = await User.find();
+       const search  = req.query.search ||'';
+       const query = {
+        $or:[
+            {first_name:{$regex:search,$options:'i'}},
+            {last_name:{$regex:search,$options:'i'}}
+        ]
+       }
+
+        const users = await User.find(query);
         res.status(200).json(users);
     } catch (err) {
         res.status(500).json({ message: err.message });

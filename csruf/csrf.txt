@@ -1,0 +1,10 @@
+npm i csurf
+npm i cookie-parser
+require csurf or cokkie-parser
+var a  =csurf({cookie:true})
+
+in middle ware second param is a 
+then 
+{cookiepass:req.csrfToken()}
+input filed name="_csrf"
+on post middlware pass a

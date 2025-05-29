@@ -10,7 +10,14 @@ email:{
     type:String,
     required:true,
     unique:true
-}})
+},
+profilePic:{
+    type:String,
+  
+}
+
+
+})
 
 
 module.exports = mongoose.model('User', User);

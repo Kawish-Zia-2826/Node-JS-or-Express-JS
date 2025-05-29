@@ -1,0 +1,36 @@
+npm i express-session mongoose bcryptjs
+connect mongoose
+make shema of mongoose
+make post router and use bcrypt hash
+mon	ate and save in mongo db data base
+make lgin post route
+and checek input use exist or not if exist so use compare method of bcryptjs to compare password is coorect or not
+make sesion 
+make if condition to if user exist so go to home page else go to login page
+
+
+cookie initalize 
+npm i cokkie paresr 
+require cookie
+app.use(cookieparesr())//simple
+app.user(cookiepareser("fdsfds"))//sign cookie
+
+cookie create 
+res.cookie(key,val{
+maxage,
+http,
+secure,
+samesite,
+sign
+
+})
+
+
+read cookie
+
+req.cookie(key)
+
+
+delete cookie
+
+res.clearcookie(key)

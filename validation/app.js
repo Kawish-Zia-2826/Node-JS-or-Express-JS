@@ -1,50 +1,84 @@
 const express = require("express");
-const mongoose = require('mongoose');
 const app = express();
 const path = require("path");
+const mongoose = require('mongoose');
+const  bcrypt = require("bcryptjs");
 var session = require('express-session')
-const bcrypt = require("bcryptjs");
-const User =  require("./module/model.js")
+
+const User = require('./model/mongo.js')
+
+mongoose.connect('mongodb://127.0.0.1:27017/Auth-Validation')
+  .then(() => console.log('Connected!'));
+app.set("view engine", "ejs");
 // middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-app.set("view engine", "ejs");
-
-mongoose.connect('mongodb://127.0.0.1:27017/test')
-  .then(() => console.log('Connected!'));
-app.get("/", (req, res) => res.send("Hello Wosdarld!"));
 
 
-app.get("/register", (req, res) => {
-  res.render("register", { title: "Register" });
-});
-app.get("/login", (req, res) => {
-  res.render("login", { title: "login  " });
+app.get('/login', (req, res) => {
+  res.render('login',{err:null})
 });
 
 
-app.post('/register', (req, res) => {
-  const { name,email, password } = req.body;
-  const hash = bcrypt.hashSync(password, 10);
-  User.create({userName:name, password:hash})
-  res.redirect("/login")
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+
+}))
+app.post('/signup',async (req, res) => {
+  const{email,password} = req.body
+  const hash =await bcrypt.hash(password, 10)
+  User.create({email:email,password:hash})
+  
+  res.redirect('/login')
+
 });
-
-
-app.post('/login', (req, res) => {
-const { email, password } = req.body;
-const user  = User.findOne({ email })
-if (!user){
-  return res.status(400).send("User not found")
-}else{
-  const isMatch = bcrypt.compareSync(password, user.password)
-  if (isMatch) {
-    res.redirect("/")
-  } else {
-    res.status(400).send("Invalid password")
+app.get("/", async(req, res) => {
+  if(!req.session.user){
+    return res.redirect('/login')
+  }else{
+    res.send(`<h1>Hello ${req.session.user}</h1><a href="/logout">Logout</a>`)
   }
-}
+  
+  
+ 
+});
+
+app.get('/signup', (req, res) => {
+  if(req.session.user){
+    return res.redirect('/')
+  }else{
+    res.render('signup')
+  }
+});
+
+app.post('/login',async (req, res) => {
+  const { email, password } = req.body
+  const user = await User.findOne({
+    email:email
+  })
+  if (!user) {
+    return res.render('login',{err:'user not found'})
+  }
+  const isMatch = await bcrypt.compare(password, user.password)
+  if (!isMatch) {
+    return res.render('login',{err:'Invalid email or passwordd'})
+  }else{
+    req.session.user = user
+    req.session.user = user.email
+    res.redirect('/')
+  }
+  
+});
 
 
-})
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return console.log(err);
+    }
+    res.redirect('/login');
+  });
+});
 app.listen(3000, () => console.log(` app listening on port port! 3000 /n http://localhost:port`));
