@@ -31,15 +31,27 @@ const User = require('../modules/module');
 router.get('/', async (req, res) => {
     try {
        const search  = req.query.search ||'';
+       const page = req.query.page || 1;
+       const limit = parseInt(req.query.limit) || 2;
+       const skip = (page -1)* limit
        const query = {
         $or:[
             {first_name:{$regex:search,$options:'i'}},
             {last_name:{$regex:search,$options:'i'}}
         ]
        }
+       const total = await User.countDocuments(query);
+       const totalPages = Math.ceil(total / limit);
+        const users = await User.find(query).skip(skip).limit(limit);
+        res.status(200).json({
+            users,
+            total,
+            totalPages,
+            currentPage: page,
+             limit,
+             users
 
-        const users = await User.find(query);
-        res.status(200).json(users);
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
