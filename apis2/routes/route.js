@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
     try {
        const search  = req.query.search ||'';
        const page = req.query.page || 1;
-       const limit = parseInt(req.query.limit) || 2;
+       const limit = parseInt(req.query.limit) || 5;
        const skip = (page -1)* limit
        const query = {
         $or:[

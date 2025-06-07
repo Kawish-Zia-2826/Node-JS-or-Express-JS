@@ -23,7 +23,9 @@ const isMatch = await UserAuth.findOne(
   
 )
 
-if(isMatch) return res.status(400).json({message:"user or email already have"});
+if(isMatch)  return res.status(409).json({message:"User or Email alerady Exist"});
+
+
 
   
   const hashedPass =await  bcrypt.hash(password,10)
@@ -32,7 +34,7 @@ if(isMatch) return res.status(400).json({message:"user or email already have"});
   res.send(users)
   console.log("register user "  + users);
 } catch (error) {
-  res.status(400).json({error:error.message,message:"catch error"})
+  res.status(500).json({error:error.message,message:"catch error"})
 }
 
 })

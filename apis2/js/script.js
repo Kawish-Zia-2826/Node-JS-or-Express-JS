@@ -2,7 +2,9 @@ const apiURL = 'http://localhost:3000/api/users/'
 const registerForm = $('#registerForm');
 registerForm.on("submit",async function (e) {
 e.preventDefault();
-const formData = new FormData(this);
+
+try {
+  const formData = new FormData(this);
 const res = Object.fromEntries(formData);
 
 const data =await  fetch(apiURL+'register',{
@@ -17,22 +19,46 @@ const data =await  fetch(apiURL+'register',{
 
 
 
+const dataa  = await  data.json();
 if(data.ok){
-  const dataa  = await  data.json();
-  console.log("Registration successful");
-  window.location.href = "index.html"
+      Swal.fire({
+  toast: true,
+  position: 'top-end',  // 👈 top-left
+  icon: 'success',
+  title: 'Registration successful',
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: true,
+})
+setTimeout(() => {
+
+window.location.href = "index.html"
+}, 2000);
 }else{
-  console.log(dataa.message|| "Registration failed");
+  const error  = dataa.message|| "Registration failed"
+  Swal.fire({
+  toast: true,
+  position: 'top-end',  // 👈 top-left
+  icon: 'error',
+  title: error,
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: true,
+})
+
   
 }
-
+} catch (error) {
+ console.log("catch error",error.message) 
+}
 
 });
 
 
 $("#loginForm").on("submit", async function (e) {
     e.preventDefault();
-    const formData = new FormData(this);
+    try {
+      const formData = new FormData(this);
     const res = Object.fromEntries(formData);
     // return console.log(JSON.stringify(res));
     const data =await fetch(apiURL+'login',{
@@ -49,10 +75,33 @@ $("#loginForm").on("submit", async function (e) {
     if(data.ok){
       localStorage.clear();
       localStorage.setItem("token",dataa.token);
-      window.location.href = "student.html";  
+          Swal.fire({
+  toast: true,
+  position: 'top-end',  // 👈 top-left
+  icon: 'success',
+  title: 'Login successful',
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: true,
+})
+      setTimeout(() => {
+        window.location.href = "student.html";  
+      }, 2000);
     }else{
-      console.log(dataa.message||"Login failed");
+      const error = dataa.message||"Login failed";
+      Swal.fire({
+  toast: true,
+  position: 'top-end',  // 👈 top-left
+  icon: 'error',
+  title: error,
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: true,
+})
       
+    }
+    } catch (error) {
+      console.log("catch error",error.message)
     }
 
 
