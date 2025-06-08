@@ -166,5 +166,16 @@ router.delete('/:id', async (req, res) => {
     }
 }
 );
+
+
+
+router.get('/show', async(req, res) => {
+    try {
+        const users = await User.find();
+        res.json({data:users})
+    } catch (error) {
+        res.status(401).json({message:error.message})
+    }
+});
  
 module.exports = router;

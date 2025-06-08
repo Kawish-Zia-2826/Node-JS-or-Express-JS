@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users Data</title>
+  <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.3.2/b-3.2.3/b-colvis-3.2.3/b-html5-3.2.3/b-print-3.2.3/datatables.min.css" rel="stylesheet" integrity="sha384-vn9PQGSCv5UINndOmuqMmvJE4iLtk84OufZuR0Bo6vEkPaNFfnPgAClOktXTEkGt" crossorigin="anonymous">
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ 
+  
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" integrity="sha384-VFQrHzqBh5qiJIU0uGU5CIW3+OWpdGGJM9LBnGbuIH2mkICcFZ7lPd/AAtI7SNf7" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" integrity="sha384-/RlQG9uf0M2vcTw3CX7fbqgbj/h8wKxw7C3zu9/GxcBPRKOEcESxaxufwRXqzq6n" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.3.2/b-3.2.3/b-colvis-3.2.3/b-html5-3.2.3/b-print-3.2.3/datatables.min.js" integrity="sha384-4Y5htwT8uJpyffclrON3kO7szvohkSv7vj5Crhr3jB0AsIYhDPA9fFUXIm2FcgGq" crossorigin="anonymous"></script>
+
+
+  <style>
+    #container{
+      width: 1000px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h2>User List - DataTables</h2>
+    <table id="myTable" class="display" >
+      <thead>
+        <tr>
+          <!-- <th>S.No.</th> -->
+          <th>first name</th>
+          <th>last name</th>
+          <th>Email</th>
+          <th>phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

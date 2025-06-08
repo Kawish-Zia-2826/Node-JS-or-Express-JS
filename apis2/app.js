@@ -19,6 +19,8 @@ const helmet  = require('helmet')
 app.use('/api/users',userRoute)
 app.use(auth)
 app.use(helmet())
+app.use(express.static("public"))
+const User = require('./modules/module')
 
 const limiter = rateLimit({
 	windowMs:  60 * 1000, // 15 minutes
@@ -64,5 +66,12 @@ fs.mkdir(folderPath, { recursive: true }, (err) => {
 
 
 
-app.get("/", (req, res) => res.json({"Hello World!": `"Welcome to the User Management API "`}));
+  app.get('', async (req, res) => {
+
+    const users = await User.find();
+    res.json({ data: users });
+  });
+  app.get('/', (req, res) => {
+    res.send("workx")
+  });
 app.listen(port, () => console.log(` app listening on port port! 3000 /n http://localhost:port`));

@@ -9,13 +9,15 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Connect MongoDB
-mongoose.connect('mongodb+srv://kawish:kawishzia1234@cluster0.nwdrgwl.mongodb.net/users_demo')
+mongoose.connect('mongodb+srv://kawish:kawishzia1234@cluster0.nwdrgwl.mongodb.net/student_managment_database')
 .then(() => console.log('Database Connected!'));
 
 // Get all users
 app.get('/api/users', async (req, res) => {
 
   const users = await User.find();
+  console.log(users);
+  
   res.json({ data: users });
 });
 

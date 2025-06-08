@@ -1,7 +1,11 @@
 $(document).ready(function(){
+  const token =  localStorage.getItem("token")
   $('#userTable').DataTable( {
     ajax: {
         url: 'http://localhost:3000/api/users',
+      headers:{
+        Authorization: `Bearer ${token}`
+      },
         dataSrc: 'data'
     },
     columns: [ 
@@ -13,9 +17,11 @@ $(document).ready(function(){
               
         }
       },
-      { data: 'name' },
+      { data: 'first_name' },
+      { data: 'last_name' },
       { data: 'email' },
-      { data: 'age' },
+      { data: 'phone' },
+      
       {
         data: '_id',
         render: function(data, type, row){

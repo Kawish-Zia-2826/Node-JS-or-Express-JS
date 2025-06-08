@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+<style>
+#body{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+</style>
+</head>
+<body>
+  <div id="container">
+    
+    <div>
+    <button id="download-csv">Download CSV</button>
+    <button id="download-json">Download JSON</button>
+    <button id="download-xlsx">Download XLSX</button>
+    <button id="download-pdf">Download PDF</button>
+    <button id="download-html">Download HTML</button>
+</div>
+
+
+    <div>
+    <button style="margin-bottom: 10px;" id="print-table">Print Table</button>
+</div>
+<div>
+  <select id="filter-field">
+    <option></option>
+    <option value="first_name">first_name</option>
+    <option value="last_name">last_name</option>
+    <option value="gender">Gender</option>
+    <option value="email">email</option>
+
+  </select>
+
+  <select id="filter-type">
+    <option value="=">=</option>
+    <option value="<"><</option>
+    <option value="<="><=</option>
+    <option value=">">></option>
+    <option value=">=">>=</option>
+    <option value="!=">!=</option>
+    <option value="like">like</option>
+  </select>
+
+  <input id="filter-value" type="text" placeholder="value to filter">
+
+ 
+</div>
+<div id="example-table"></div>
+  </div>
+<script type="text/javascript" src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+  <script src="tabular.js"></script>
+</body>
+</html>
