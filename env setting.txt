@@ -1,0 +1,8 @@
+# Remove .env from Git tracking
+git rm --cached .env
+
+# Commit the removal
+git commit -m "Remove .env from tracking"
+
+# Push to GitHub
+git push
