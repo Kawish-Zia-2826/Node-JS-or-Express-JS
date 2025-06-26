@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>ADMIN Panel</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <!-- Custom stlylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+  </head>
+  <body>
+    <!-- HEADER -->
+    <div id="header-admin">
+      <!-- container -->
+      <div class="container">
+          <!-- row -->
+          <div class="row">
+            <!-- LOGO -->
+            <div class="col-md-2 me-auto">
+               <a href="dashboard.html"><img class="logo" src="images/news.jpg" alt="Logo"></a>
+            </div>
+            <!-- /LOGO -->
+            <!-- LOG-Out -->
+            <div class="col-md-2">
+                <a href="logout.html" class="admin-logout">
+                  <i class="fa fa-sign-out"></i> logout
+                </a>
+            </div>
+            <!-- /LOG-Out -->
+          </div>
+      </div>
+    </div>
+    <!-- /HEADER -->
+    <!-- Menu Bar -->
+    <div id="admin-menubar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="admin-menu">
+              <li>
+                <a href="dashboard.html">Home</a>
+              </li>
+              <li>
+                <a href="article.html">Article</a>
+              </li>
+              <li>
+                <a href="category.html">Category</a>
+              </li>
+              <li>
+                <a href="users.html">Users</a>
+              </li>
+              <li>
+                <a href="comments.html">Comments</a>
+              </li>
+              <li>
+                <a href="settings.html">Settings</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Menu Bar -->
+
+  <div id="admin-content">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12">
+                  <h1 class="admin-heading"><i class="fa fa-comments"></i> Comments Management</h1>
+              </div>
+              <div class="col-md-12">
+                  <table class="content-table" style="background: white;">
+                      <thead>
+                          <th>Article</th>
+                          <th>Name</th>
+                          <th>Comment</th>
+                          <th>Status</th>
+                          <th>Date</th>
+                          <th>Actions</th>
+                      </thead>
+                      <tbody>
+                          <tr>
+                            <td class='id'>Ipsum dolor sit amet</td>
+                            <td>Rahul Sharma</td>
+                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, eveniet!</td>
+                            <td>Approved</td>
+                            <td>02-Nov-2025</td>
+                            <td class='edit'>
+                              <select name="status" class="form-select form-select-sm d-inline-block w-auto">
+                                <option value="pending">Pending</option>
+                                <option value="approved" selected="">Approved</option>
+                                <option value="rejected">Rejected</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class='id'>Ipsum dolor sit amet</td>
+                            <td>Rahul Sharma</td>
+                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, eveniet!</td>
+                            <td>Approved</td>
+                            <td>02-Nov-2025</td>
+                            <td class='edit'>
+                              <select name="status" class="form-select form-select-sm d-inline-block w-auto">
+                                <option value="pending">Pending</option>
+                                <option value="approved" selected="">Approved</option>
+                                <option value="rejected">Rejected</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class='id'>Ipsum dolor sit amet</td>
+                            <td>Rahul Sharma</td>
+                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, eveniet!</td>
+                            <td>Approved</td>
+                            <td>02-Nov-2025</td>
+                            <td class='edit'>
+                              <select name="status" class="form-select form-select-sm d-inline-block w-auto">
+                                <option value="pending">Pending</option>
+                                <option value="approved" selected="">Approved</option>
+                                <option value="rejected">Rejected</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class='id'>Ipsum dolor sit amet</td>
+                            <td>Rahul Sharma</td>
+                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, eveniet!</td>
+                            <td>Approved</td>
+                            <td>02-Nov-2025</td>
+                            <td class='edit'>
+                              <select name="status" class="form-select form-select-sm d-inline-block w-auto">
+                                <option value="pending">Pending</option>
+                                <option value="approved" selected="">Approved</option>
+                                <option value="rejected">Rejected</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class='id'>Ipsum dolor sit amet</td>
+                            <td>Rahul Sharma</td>
+                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, eveniet!</td>
+                            <td>Approved</td>
+                            <td>02-Nov-2025</td>
+                            <td class='edit'>
+                              <select name="status" class="form-select form-select-sm d-inline-block w-auto">
+                                <option value="pending">Pending</option>
+                                <option value="approved" selected="">Approved</option>
+                                <option value="rejected">Rejected</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class='id'>Ipsum dolor sit amet</td>
+                            <td>Rahul Sharma</td>
+                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, eveniet!</td>
+                            <td>Approved</td>
+                            <td>02-Nov-2025</td>
+                            <td class='edit'>
+                              <select name="status" class="form-select form-select-sm d-inline-block w-auto">
+                                <option value="pending">Pending</option>
+                                <option value="approved" selected="">Approved</option>
+                                <option value="rejected">Rejected</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class='id'>Ipsum dolor sit amet</td>
+                            <td>Rahul Sharma</td>
+                            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, eveniet!</td>
+                            <td>Approved</td>
+                            <td>02-Nov-2025</td>
+                            <td class='edit'>
+                              <select name="status" class="form-select form-select-sm d-inline-block w-auto">
+                                <option value="pending">Pending</option>
+                                <option value="approved" selected="">Approved</option>
+                                <option value="rejected">Rejected</option>
+                              </select>
+                            </td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <nav aria-label="...">
+                    <ul class="pagination">
+                      <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item active">
+                        <a class="page-link" href="#" aria-current="page">2</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+              </div>
+          </div>
+      </div>
+  </div>
+<!-- Footer -->
+<div id ="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <span>© Copyright 2025 News | Powered by <a href="http://yahubaba.com/">Yahu Baba</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Footer -->
+</body>
+</html>
