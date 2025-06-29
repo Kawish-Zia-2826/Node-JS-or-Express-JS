@@ -1,83 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>ADMIN Panel</title>
+    <title>News</title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
     <!-- Custom stlylesheet -->
-    <link rel="stylesheet" href="../css/style.css">
-  </head>
-  <body>
-    <!-- HEADER -->
-    <div id="header-admin">
-      <!-- container -->
-      <div class="container">
-          <!-- row -->
-          <div class="row">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- HEADER -->
+<div id="header">
+    <!-- container -->
+    <div class="container">
+        <div class="row justify-content-center">
             <!-- LOGO -->
-            <div class="col-md-2 me-auto">
-               <a href="dashboard.html"><img class="logo" src="images/news.jpg" alt="Logo"></a>
+            <div class="col-md-3">
+                <a href="index.html" id="logo"><img src="images/news.jpg" alt="Logo" /></a>
             </div>
             <!-- /LOGO -->
-            <!-- LOG-Out -->
-            <div class="col-md-2">
-                <a href="logout.html" class="admin-logout">
-                  <i class="fa fa-sign-out"></i> logout
-                </a>
-            </div>
-            <!-- /LOG-Out -->
-          </div>
-      </div>
-    </div>
-    <!-- /HEADER -->
-    <!-- Menu Bar -->
-    <div id="admin-menubar">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <ul class="admin-menu">
-              <li>
-                <a href="dashboard.html">Home</a>
-              </li>
-              <li>
-                <a href="article.html">Article</a>
-              </li>
-              <li>
-                <a href="category.html">Category</a>
-              </li>
-              <li>
-                <a href="users.html">Users</a>
-              </li>
-              <li>
-                <a href="comments.html">Comments</a>
-              </li>
-              <li>
-                <a href="settings.html">Settings</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /Menu Bar -->
-
-<%- body%>
-<!-- Footer -->
-<div id ="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <span>© Copyright 2025 News | Powered by <a href="http://yahubaba.com/">Yahu Baba</a></span>
-            </div>
         </div>
     </div>
 </div>
-<!-- /Footer -->
+<!-- /HEADER -->
+<!-- Menu Bar -->
+<div id="menu-bar">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class='menu'>
+          <li><a href='index.html'>Home</a></li>
+          <li><a href='category.html'>Business</a></li>
+          <li><a href='category.html'>Entertainment</a></li>
+          <li><a href='category.html'>Sports</a></li>
+          <li><a href='category.html'>Politics</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Menu Bar -->
+
+  <div id="main-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <!-- post-container -->
+           <%- body%>
+          <!-- /post-container -->
+        </div>
+        <!-- sidebar -->
+        <div id="sidebar" class="col-md-4">
+          <!-- search box -->
+          <div class="search-box-container">
+              <h4>Search</h4>
+              <form class="search-post" action="search.html" method ="GET">
+                  <div class="input-group">
+                      <input type="text" name="search" class="form-control" placeholder="Search .....">
+                      <span class="input-group-btn">
+                          <button type="submit" class="btn btn-danger">Search</button>
+                      </span>
+                  </div>
+              </form>
+          </div>
+          <!-- /search box -->
+          <!-- recent posts box -->
+          <div class="recent-post-container">
+              <h4>Recent Posts</h4>
+              <div class="recent-post">
+                  <a class="post-img" href="">
+                      <img src="images/post-format.jpg" alt=""/>
+                  </a>
+                  <div class="post-content">
+                      <h5><a href="single.html">Lorem ipsum dolor sit amet</a></h5>
+                      <span>
+                          <i class="fa fa-tags" aria-hidden="true"></i>
+                          <a href='category.html'>Html</a>
+                      </span>
+                      <span>
+                          <i class="fa fa-calendar" aria-hidden="true"></i>
+                          01 Nov, 2025
+                      </span>
+                      <a class="read-more" href="single.html">read more</a>
+                  </div>
+              </div>
+              <div class="recent-post">
+                  <a class="post-img" href="">
+                      <img src="images/post_1.jpg" alt=""/>
+                  </a>
+                  <div class="post-content">
+                      <h5><a href="single.html">Lorem ipsum dolor sit amet</a></h5>
+                      <span>
+                          <i class="fa fa-tags" aria-hidden="true"></i>
+                          <a href='category.html'>Html</a>
+                      </span>
+                      <span>
+                          <i class="fa fa-calendar" aria-hidden="true"></i>
+                          01 Nov, 2025
+                      </span>
+                      <a class="read-more" href="single.html">read more</a>
+                  </div>
+              </div>
+              <div class="recent-post">
+                  <a class="post-img" href="">
+                      <img src="images/post-format.jpg" alt=""/>
+                  </a>
+                  <div class="post-content">
+                      <h5><a href="single.html">Lorem ipsum dolor sit amet</a></h5>
+                      <span>
+                          <i class="fa fa-tags" aria-hidden="true"></i>
+                          <a href='category.html'>Html</a>
+                      </span>
+                      <span>
+                          <i class="fa fa-calendar" aria-hidden="true"></i>
+                          01 Nov, 2025
+                      </span>
+                      <a class="read-more" href="single.html">read more</a>
+                  </div>
+              </div>
+              <div class="recent-post">
+                  <a class="post-img" href="">
+                      <img src="images/post_1.jpg" alt=""/>
+                  </a>
+                  <div class="post-content">
+                      <h5><a href="single.html">Lorem ipsum dolor sit amet</a></h5>
+                      <span>
+                          <i class="fa fa-tags" aria-hidden="true"></i>
+                          <a href='category.html'>Html</a>
+                      </span>
+                      <span>
+                          <i class="fa fa-calendar" aria-hidden="true"></i>
+                          01 Nov, 2025
+                      </span>
+                      <a class="read-more" href="single.html">read more</a>
+                  </div>
+              </div>
+              <div class="recent-post">
+                  <a class="post-img" href="">
+                      <img src="images/post-format.jpg" alt=""/>
+                  </a>
+                  <div class="post-content">
+                      <h5><a href="single.html">Lorem ipsum dolor sit amet</a></h5>
+                      <span>
+                          <i class="fa fa-tags" aria-hidden="true"></i>
+                          <a href='category.html'>Html</a>
+                      </span>
+                      <span>
+                          <i class="fa fa-calendar" aria-hidden="true"></i>
+                          01 Nov, 2025
+                      </span>
+                      <a class="read-more" href="single.html">read more</a>
+                  </div>
+              </div>
+          </div>
+          <!-- /recent posts box -->
+        </div>
+        <!-- /sidebar -->
+      </div>
+    </div>
+  </div>
+  <div id ="footer">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12">
+                  <span>© Copyright 2025 News | Powered by <a href="http://www.yahubaba.com/">Yahu Baba</a></span>
+              </div>
+          </div>
+      </div>
+  </div>
 </body>
 </html>

@@ -22,7 +22,7 @@ const newSchema = new mongoose.Schema({
         required: true
     },
     images: {
-        type: string,
+        type: String,
         required: true
     },
     createAt: {

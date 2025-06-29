@@ -25,5 +25,6 @@ const categorySchema = new mongoose.Schema({
         this.slug = slugify(this.name, { lower: true });
     }
     next();
+});
 
 module.exports = mongoose.model('Category', categorySchema);

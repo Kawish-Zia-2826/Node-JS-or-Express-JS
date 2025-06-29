@@ -23,10 +23,21 @@ app.set('view engine', 'ejs');
 
 
 mongoose.connect(
-    process.env.MONGODB_URI,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    () => console.log('Connected to DB')
-);
+    process.env.MONGODB_URI || 'mongodb://localhost:27017/cms_project'
+).then(() => {
+    console.log('MongoDB connected successfully');
+}).catch(err => console.log(err));  
+
+
+
+app.use('/admin',(req,res,next)=>{
+    res.locals.layout = 'admin/layout'
+    next();
+})
+// Routes
+
+app.use('/',require('./routes/frontend'))
+app.use('/admin',require('./routes/admin'))
 
 app.get('/', (req, res) => {
     res.send('Hello World');
