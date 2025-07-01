@@ -22,7 +22,7 @@ router.get('/add-user',userController.addUserPage);
 router.post('/add-user',userController.addUser);
 router.get('/update-user/:id',userController.updateUserPage);
 router.post('/update-user/:id',userController.updateUser);
-router.get('/delete-user/:id',userController.deleteUser);
+router.delete('/delete-user/:id',userController.deleteUser);
 
 
 
