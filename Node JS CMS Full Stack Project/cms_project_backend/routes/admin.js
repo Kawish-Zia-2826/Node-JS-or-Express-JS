@@ -41,18 +41,18 @@ router.get('/delete-category/:id',issLogedIn,isAdmin,categoryController.deleteCa
 
 // artical Crud
 
-router.get('/article',articalController.allArticles);
-router.get('/add-article',articalController.addArticlePage);
+router.get('/article',issLogedIn,articalController.allArticles);
+router.get('/add-article',issLogedIn,articalController.addArticlePage);
 router.post('/add-article',articalController.addArticle);
-router.get('/update-article/:id',articalController.updateArticlePage);
+router.get('/update-article/:id',issLogedIn,articalController.updateArticlePage);
 router.post('/update-article/:id',articalController.updateArticle);
-router.get('/delete-article/:id',articalController.deleteArticle);
+router.delete('/delete-article/:id',articalController.deleteArticle);
 
 
 // Comment route
 
 
-router.get('/comments',commentConroller.allComments);
+router.get('/comments',issLogedIn,commentConroller.allComments);
 
 
 

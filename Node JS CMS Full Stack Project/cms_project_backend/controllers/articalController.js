@@ -6,6 +6,7 @@ const newsModel = require('../models/News');
 const allArticles = async (req, res) => {
     res.render('admin/articles/index',{role:req.role});
 };
+
 const addArticlePage = async (req, res) => {
     res.render('admin/articles/create',{role:req.role})
 };
