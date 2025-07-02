@@ -1,0 +1,3 @@
+when login form sumit then aedmin/index route called
+include jwt ,bcrypt,dotenv, cookie-parser
+when user submit form	

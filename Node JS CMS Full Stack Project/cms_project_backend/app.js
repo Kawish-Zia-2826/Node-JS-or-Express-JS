@@ -2,13 +2,14 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const session = require('express-session');
+var cookieParser = require('cookie-parser')
 const flash = require('connect-flash');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts'); 
 dotenv.config();
 
 // Middleware
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));

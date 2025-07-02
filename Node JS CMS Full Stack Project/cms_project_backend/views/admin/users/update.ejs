@@ -27,8 +27,8 @@
               <div class="mb-3">
                 <label class="form-label">User Role</label>
                 <select class="form-control" name="role" >
-                  <option value="author"<%= user.role == 'author' ? 'selected' : ''%> >Author</option>
-                  <option value="admin" <%= user.role == 'admin' ? 'selected' : ''%>  >Administrator</option>
+                  <option value="author"  <%=users.role == 'author' ? 'selected' : ''%> >Author</option>
+                  <option value="admin" <%=users.role == 'admin' ? 'selected' : ''%> >Administrator</option>
                 </select>
               </div>
               <input type="submit" name="save" class="btn btn-primary" value="Update" required />

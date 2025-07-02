@@ -1,4 +1,8 @@
 const userModel = require('../models/User');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 
 
 const loginPage = async (req, res) => {
@@ -6,8 +10,27 @@ const loginPage = async (req, res) => {
         layout:false
     })
 };
-const adminLogin = async (req, res) => {};
-const logout = async (req, res) => {};
+const adminLogin = async (req, res) => {
+const {username, password} = req.body;
+    try {
+        const user = await userModel.findOne({username});
+        if(!user) return res.status(404).send('User or password not found');
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(!isMatch) return res.status(401).send('Incorect User or password');
+        const jwtData = {id:user._id,fullname:user.fullname,role:user.role}
+        const token = jwt.sign(jwtData, process.env.JWT_SECRET,{expiresIn:'1h'});
+        res.cookie('token', token, {httpOnly:true,maxAge:1000* 60 * 60}); // 1 hour
+        res.redirect('/admin/dashboard');
+    } catch (error) {
+        console.error('Error logging in user:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
+};
+const logout = async (req, res) => {
+    res.clearCookie('token');
+    res.redirect('/admin/');
+};
 
 
 
@@ -89,7 +112,6 @@ module.exports = {
     loginPage,
     adminLogin,
     logout,
-
     allUsers,
     addUserPage,
     addUser,
