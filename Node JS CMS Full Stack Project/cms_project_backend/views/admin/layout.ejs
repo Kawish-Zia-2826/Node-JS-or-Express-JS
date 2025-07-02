@@ -32,7 +32,7 @@
             <!-- /LOGO -->
             <!-- LOG-Out -->
             <div class="col-md-2">
-                <a href="logout.html" class="admin-logout">
+                <a href="/admin/logout" class="admin-logout">
                   <i class="fa fa-sign-out"></i> logout
                 </a>
             </div>
@@ -41,10 +41,42 @@
       </div>
     </div>
     <!-- /HEADER -->
-    <!-- Menu Bar -->
-    <%- body %>
+      <!-- Menu Bar -->
+    <div id="admin-menubar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="admin-menu">
+              <li>
+                <a href="/admin/dashboard">Home</a>
+              </li>
+              <li>
+                <a href="/admin/article">Article</a>
+              </li>
+              <% if(role === 'admin') { %>
+              <li>
+                <a href="/admin/category">Category</a>
+              </li>
+              <li>
+                <a href="/admin/users">Users</a>
+              </li>
+              <% } %>
+              <li>
+                <a href="/admin/comments">Comments</a>
+              </li>
+              <% if(role === 'admin') { %>
+              <li>
+                <a href="/admin/settings">Settings</a>
+              </li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- /Menu Bar -->
-
+    <%- body %>
+    
  
 <!-- Footer -->
 <div id ="footer">

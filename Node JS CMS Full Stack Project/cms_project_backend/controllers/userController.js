@@ -12,17 +12,18 @@ const loginPage = async (req, res) => {
 };
 const adminLogin = async (req, res) => {
 const {username, password} = req.body;
+
     try {
         const user = await userModel.findOne({username});
-        if(!user) return res.status(404).send('User or password not found');
+        if(!user) return res.status(404).send('User  not found');
         const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch) return res.status(401).send('Incorect User or password');
+        if(!isMatch) return res.status(401).send('Incorect  password');
         const jwtData = {id:user._id,fullname:user.fullname,role:user.role}
         const token = jwt.sign(jwtData, process.env.JWT_SECRET,{expiresIn:'1h'});
         res.cookie('token', token, {httpOnly:true,maxAge:1000* 60 * 60}); // 1 hour
         res.redirect('/admin/dashboard');
     } catch (error) {
-        console.error('Error logging in user:', error);
+        console.error('Error logging in user:', error.message);
         res.status(500).send('Internal Server Error');
     }
 
@@ -33,15 +34,23 @@ const logout = async (req, res) => {
 };
 
 
+const dashboard = async (req,res)=>{
+    res.render('admin/dashboard',{role:req.role,fullname:req.fullname});
+}
+
+const setting = async (req,res)=>{
+    res.render('admin/setting',{role:req.role});
+}
+
 
 const allUsers = async (req, res) => {
 
     const users   = await userModel.find();
 
-    res.render('admin/users',{users});
+    res.render('admin/users',{users,role:req.role});
 };
 const addUserPage = async (req, res) => {
-    res.render('admin/users/create')
+    res.render('admin/users/create',{role:req.role})
 };
 const addUser = async (req, res) => {
 try {
@@ -56,7 +65,7 @@ try {
 const updateUserPage = async (req, res) => {
     try {
         const users = await userModel.findById(req.params.id);
-        res.render('admin/users/update', { users });
+        res.render('admin/users/update', { users ,role:req.role});
         if(!users) return res.status(404).send('User not found');   
     } catch (error) {
         console.error('Error finding user:', error);
@@ -117,5 +126,7 @@ module.exports = {
     addUser,
     updateUserPage,
     updateUser,
-    deleteUser
+    deleteUser,
+    dashboard,
+    setting
 };
