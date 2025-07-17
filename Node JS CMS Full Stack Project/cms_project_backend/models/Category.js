@@ -20,7 +20,7 @@ const categorySchema = new mongoose.Schema({
     }
 });
 
- categorySchema.pre('save', function(next) {
+ categorySchema.pre('validate', function(next) {
     if (!this.slug) {
         this.slug = slugify(this.name, { lower: true });
     }
