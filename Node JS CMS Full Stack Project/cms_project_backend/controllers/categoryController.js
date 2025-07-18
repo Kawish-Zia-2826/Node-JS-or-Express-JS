@@ -3,8 +3,8 @@ const categoryModel = require('../models/Category');
 
 const allCategories = async (req, res) => {
     try {
-        // const categories = await categoryModel.find();
-       res.render('admin/category',{role:req.role})
+        const categories = await categoryModel.find();
+       res.render('admin/category',{categories,role:req.role})
     } catch (error) {
         console.error('Error fetching categories:', error);
         res.status(500).send('Internal Server Error');
