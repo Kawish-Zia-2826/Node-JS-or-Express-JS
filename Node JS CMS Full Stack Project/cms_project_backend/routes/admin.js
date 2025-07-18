@@ -36,7 +36,7 @@ router.get('/add-category',issLogedIn,isAdmin,categoryController.addCategoryPage
 router.post('/add-category',issLogedIn,isAdmin,categoryController.addCategory);
 router.get('/update-category/:id',issLogedIn,isAdmin,categoryController.updateCategoryPage);
 router.post('/update-category/:id',issLogedIn,isAdmin,categoryController.updateCategory);
-router.get('/delete-category/:id',issLogedIn,isAdmin,categoryController.deleteCategory);
+router.delete('/delete-category/:id',issLogedIn,isAdmin,categoryController.deleteCategory);
 
 
 // artical Crud
