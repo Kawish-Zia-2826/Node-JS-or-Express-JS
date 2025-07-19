@@ -8,9 +8,12 @@ const allArticles = async (req, res) => {
 };
 
 const addArticlePage = async (req, res) => {
-    res.render('admin/articles/create',{role:req.role})
+    const categories = await CategoryModel.find();
+    res.render('admin/articles/create',{categories,role:req.role})
 };
-const addArticle = async (req, res) => {};
+const addArticle = async (req, res) => {
+    
+};
 const updateArticlePage = async (req, res) => {
     res.render('admin/update',{role:req.role})
 };

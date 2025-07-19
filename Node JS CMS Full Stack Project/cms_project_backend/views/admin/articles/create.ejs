@@ -21,7 +21,10 @@
                 <div class="mb-3">
                     <label for="article_category" class="form-label">Category</label>
                     <select name="category" id="article_category" class="form-control">
-                        <option value="" selected> Select Category</option>
+                        <option value="" selected disabled> Select Category</option>
+                        <% categories.forEach(category => { %>
+                          <option value="<%= category._id %>"><%= category.name %></option>
+                        <% }); %>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -37,3 +40,22 @@
       </div>
     </div>
   </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Summernote Lite JS -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<!-- <script src="js/summernote-bs5.js"></script> -->
+<script>
+  $(document).ready(function () {
+    $('#summernote').summernote({
+      placeholder: 'Start typing...',
+      tabsize: 2,
+      height: 200
+    });
+  });
+</script>
+
+
+<%- contentFor('summerNote') %>
+   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
