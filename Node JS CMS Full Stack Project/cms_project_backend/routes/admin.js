@@ -43,10 +43,10 @@ router.delete('/delete-category/:id',issLogedIn,isAdmin,categoryController.delet
 
 router.get('/article',issLogedIn,articalController.allArticles);
 router.get('/add-article',issLogedIn,articalController.addArticlePage);
-router.post('/add-article',upload.single('image'),articalController.addArticle);
+router.post('/add-article',upload.single('image'),issLogedIn,articalController.addArticle);
 router.get('/update-article/:id',issLogedIn,articalController.updateArticlePage);
-router.post('/update-article/:id',upload.single('image'),articalController.updateArticle);
-router.delete('/delete-article/:id',articalController.deleteArticle);
+router.post('/update-article/:id',upload.single('image'),issLogedIn,articalController.updateArticle);
+router.delete('/delete-article/:id',issLogedIn,articalController.deleteArticle);
 
 
 // Comment route

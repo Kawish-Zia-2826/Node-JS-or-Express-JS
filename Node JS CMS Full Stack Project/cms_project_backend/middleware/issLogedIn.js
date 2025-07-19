@@ -8,9 +8,10 @@ const issLogedIn = (req, res, next) => {
     try {
         const user = jwt.verify(token, process.env.JWT_SECRET);
         // req.user = decoded; // Attach user data to request object
-
+        req.id = user.id
         req.role = user.role
         req.fullname = user.fullname
+        // console.log(req.id);
         next(); 
     } catch (error) {
         console.error('JWT verification failed:', error.message);
