@@ -1,7 +1,8 @@
 const CategoryModel = require('../models/Category');
 const userModel = require('../models/User');
 const newsModel = require('../models/News');
-
+const fs = require('fs');
+const path = require('path');
 
 const allArticles = async (req, res) => {
 let news;
@@ -89,6 +90,11 @@ const updateArticle = async (req, res) => {
         article.content = content;
         article.category = category;
         if(req.file) {
+            try {
+                fs.unlinkSync(path.join(__dirname, '../public/uploads/', article.images));
+            } catch (error) {
+                console.error('Error deleting image:', error);
+            }
             article.images = req.file.filename;
         }
         await article.save();
@@ -108,8 +114,11 @@ const deleteArticle = async (req, res) => {
                 return res.status(403).send('You are not authorized to delete this article');
             }
         }
-
-        await article.deleteOne();
+ try {
+                fs.unlinkSync(path.join(__dirname, '../public/uploads/', article.images));
+            } catch (error) {
+                console.error('Error deleting image:', error);
+            }        await article.deleteOne();
         res.json({message:"deleted successfully",success:true});
     } catch (error) {
         console.error('Error deleting article:', error);

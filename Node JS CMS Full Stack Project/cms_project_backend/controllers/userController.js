@@ -2,7 +2,9 @@ const userModel = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-
+const categoryModel = require('../models/Category');
+const newsModel = require('../models/News');
+const Setting = require('../models/Setting');
 
 
 const loginPage = async (req, res) => {
@@ -35,11 +37,52 @@ const logout = async (req, res) => {
 
 
 const dashboard = async (req,res)=>{
-    res.render('admin/dashboard',{role:req.role,fullname:req.fullname});
+let countNews;
+if(req.role == 'admin'){
+ countNews = await newsModel.countDocuments();
+}else{
+    countNews = await newsModel.countDocuments({author:req.id}); 
+}
+const countCategories = await categoryModel.countDocuments();
+const countUsers = await userModel.countDocuments();    
+
+
+
+    res.render('admin/dashboard',{
+        role:req.role,
+        fullname:req.fullname,
+        countNews,
+        countCategories,
+        countUsers
+    });
 }
 
 const setting = async (req,res)=>{
-    res.render('admin/setting',{role:req.role});
+    try {
+        const setting = await Setting.findOne();
+        res.render('admin/setting',{role:req.role,setting});
+    } catch (error) {
+        console.error('Error fetching setting:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+const saveSetting = async(req,res)=>{
+
+    try{
+        const {website_title, footer_description} = req.body;
+        let website_logo = req.file ? req.file.filename : null;
+        const setting  = await Setting.findOneAndUpdate(
+            {},
+            {website_title, footer_description, website_logo},
+            {new: true, upsert: true} // Create if it doesn't exist
+            );
+            res.redirect('/admin/settings');
+    }catch(error){
+        console.error('Error saving setting:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
 }
 
 
@@ -128,5 +171,6 @@ module.exports = {
     updateUser,
     deleteUser,
     dashboard,
-    setting
+    setting,
+    saveSetting
 };

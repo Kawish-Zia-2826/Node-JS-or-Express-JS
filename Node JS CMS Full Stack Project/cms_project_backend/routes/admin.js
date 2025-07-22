@@ -1,10 +1,12 @@
 const express  =require('express');
 var Router = require('router')
 
+
 var router = Router();
 const issLogedIn = require('../middleware/issLogedIn');
 const isAdmin = require('../middleware/isAdmin');
 const upload = require('../middleware/multer');
+
 
 
 const articalController = require('../controllers/articalController');
@@ -19,6 +21,7 @@ router.post('/index',userController.adminLogin);
 router.get('/logout',userController.logout);
 router.get('/dashboard',issLogedIn,userController.dashboard);
 router.get('/settings',issLogedIn,isAdmin,userController.setting);
+router.post('/save-settings',issLogedIn,isAdmin,upload.single('website_logo'),userController.saveSetting);
 
 // Crud Route
 router.get('/users',issLogedIn,isAdmin,userController.allUsers);
@@ -53,6 +56,9 @@ router.delete('/delete-article/:id',issLogedIn,articalController.deleteArticle);
 
 
 router.get('/comments',issLogedIn,commentConroller.allComments);
+
+
+
 
 
 
