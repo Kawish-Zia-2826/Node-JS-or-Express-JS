@@ -58,10 +58,41 @@ router.delete('/delete-article/:id',issLogedIn,articalController.deleteArticle);
 router.get('/comments',issLogedIn,commentConroller.allComments);
 
 
+//404 route
+
+router.use(issLogedIn,(req,res,next)=>{
+    res.status(404).render('admin/404',
+      {message:"page not found",role:req.role,status:404}
+    );
+});
 
 
+router.use(issLogedIn, (err, req, res, next) => {
+   const status  =  err.status || 500;
+   let viw;
+   switch (status) {
+       case 401:
+            viw = 'admin/401';
+           break;
+       case 403:
+            viw = 'admin/404';
+           break;
+       default:
+            viw = 'admin/500';
+           
+   }
+   res.status(status).render(viw, {
+       message: err.message || 'Internal Server Error',
+       role: req.role,
+       status
+   });
+  }); 
 
 
+// router.use(issLogedIn, (err, req, res, next) => {
+//     console.error(err.stack);
+//     res.render('admin/500.ejs', { message: 'Internal Server Error', role: req.role });
+//   }); 
 
 
 module.exports = router;

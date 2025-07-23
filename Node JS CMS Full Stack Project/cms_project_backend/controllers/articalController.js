@@ -3,8 +3,9 @@ const userModel = require('../models/User');
 const newsModel = require('../models/News');
 const fs = require('fs');
 const path = require('path');
+const createError = require('../utils/error-message');
 
-const allArticles = async (req, res) => {
+const allArticles = async (req, res,next) => {
 let news;
     try {
         if(req.role == 'admin'){
@@ -24,15 +25,16 @@ let news;
 
         res.render('admin/articles/index',{news,role:req.role});
     } catch (error) {
-        console.error('Error fetching articles:', error);
-        res.status(500).send('Internal Server Error');
+        // console.error('Error fetching articles:', error);
+        // res.status(500).send('Internal Server Error');
+        next(error); // Pass the error to the next middleware
     }
 
 
     
 };
 
-const addArticlePage = async (req, res) => {
+const addArticlePage = async (req, res,next) => {
     const categories = await CategoryModel.find();
     res.render('admin/articles/create',{categories,role:req.role})
 };
@@ -52,16 +54,20 @@ const addArticle = async (req, res) => {
         await news.save();
         res.redirect('/admin/article');
     } catch (error) {
-        console.error('Error creating article:', error);
-        res.status(500).send('Internal Server Error ' + error.message);
+        // console.error('Error creating article:', error);
+        // res.status(500).send('Internal Server Error ' + error.message);
+        next(error);
     }
 };
-const updateArticlePage = async (req, res) => {
-
+const updateArticlePage = async (req, res,next) => {
+            const id  = req.params.id;
     try {
-        const article = await newsModel.findById(req.params.id).populate('category','name').populate('author','fullname');
-        if(!article) return res.status(404).send('Article not found');
-         if(req.role == "author" ){
+        const article = await newsModel.findById(id).populate('category','name').populate('author','fullname');
+        if(!article) {
+            return next(createError('Article not found', 404));
+            
+
+        }         if(req.role == "author" ){
             if(req.id != article.author._id) {
                 return res.status(403).send('You are not authorized to delete this article');
             }
@@ -69,17 +75,19 @@ const updateArticlePage = async (req, res) => {
         const categories = await CategoryModel.find();
         res.render('admin/articles/update',{article,categories,role:req.role})
     } catch (error) {
-        console.error('Error fetching article for update:', error);
-        res.status(500).send('Internal Server Error');
+        // console.error('Error fetching article for update:', error);
+        // res.status(500).send('Internal Server Error');
+        next(error);
     }
 
 
    
 };
-const updateArticle = async (req, res) => {
+const updateArticle = async (req, res,next) => {
+    const id = req.params.id;
     try {
-       const article  = await newsModel.findById(req.params.id);
-       if(!article) return res.status(404).send('Article not found');
+        const article  = await newsModel.findById(id);
+       if(!article)  return next(createError('Article not found', 404));
         if(req.role == "author" ){
             if(req.id != article.author._id) {
                 return res.status(403).send('You are not authorized to delete this article');
@@ -101,14 +109,15 @@ const updateArticle = async (req, res) => {
         res.redirect('/admin/article');
     
     } catch (error) {
-        console.error('Error updating article:', error);
-        res.status(500).send('Internal Server Error ' + error.message);
+        // console.error('Error updating article:', error);
+        // res.status(500).send('Internal Server Error ' + error.message);
+        next(error);
     }
 };
-const deleteArticle = async (req, res) => {
+const deleteArticle = async (req, res,next) => {
     try {
         const article = await newsModel.findById(req.params.id);
-        if(!article) return res.status(404).send('Article not found');
+        if(!article)  return next(createError('Article not found', 404));
         if(req.role == "author" ){
             if(req.id != artical.author._id) {
                 return res.status(403).send('You are not authorized to delete this article');
@@ -121,8 +130,9 @@ const deleteArticle = async (req, res) => {
             }        await article.deleteOne();
         res.json({message:"deleted successfully",success:true});
     } catch (error) {
-        console.error('Error deleting article:', error);
-        res.status(500).send('Internal Server Error');
+        // console.error('Error deleting article:', error);
+        // res.status(500).send('Internal Server Error');
+        next(error);
     }
 };
 

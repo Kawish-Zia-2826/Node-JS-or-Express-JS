@@ -1,0 +1,5 @@
+make  a middle ware of err like router.use 
+for server kind of err use this type of middlware like router.use(err,req,res,next
+if you want to use this err middlware you need to add all of controller next and where is catch err pass next(err)	
+
+and if like other err like 404 then pas a throw new err and ser err.status then update first midleware like that
