@@ -1,6 +1,6 @@
 const express  =require('express');
 var Router = require('router')
-
+const validate  = require('../middleware/validator');
 
 var router = Router();
 const issLogedIn = require('../middleware/issLogedIn');
@@ -17,7 +17,7 @@ const userController = require('../controllers/userController');
 // Login Route
 
 router.get('/',userController.loginPage);
-router.post('/index',userController.adminLogin);
+router.post('/index',validate.validate,userController.adminLogin);
 router.get('/logout',userController.logout);
 router.get('/dashboard',issLogedIn,userController.dashboard);
 router.get('/settings',issLogedIn,isAdmin,userController.setting);

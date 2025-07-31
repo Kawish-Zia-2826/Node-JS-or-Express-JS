@@ -8,13 +8,24 @@ const Setting = require('../models/Setting');
 const createError = require('../utils/error-message');
 const path = require('path');
 const fs = require('fs');
+const {validationResult} = require('express-validator');
 
 const loginPage = async (req, res) => {
     res.render('admin/login',{
-        layout:false
+        layout:false,
+        errors:0
     })
 };
 const adminLogin = async (req, res,next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+       
+        return res.status(400).render('admin/login',{
+            errors:errors.array(),
+            layout:false
+        });
+    }
+
 const {username, password} = req.body;
 
     try {
