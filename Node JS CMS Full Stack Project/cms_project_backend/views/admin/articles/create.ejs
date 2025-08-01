@@ -12,11 +12,11 @@
               <form action="" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="article_title" class="form-label">Title</label>
-                    <input type="text" name="title" id="article_title" class="form-control" autocomplete="off" required>
+                    <input type="text" name="title" id="article_title" class="form-control" autocomplete="off" >
                 </div>
                 <div class="mb-3">
                     <label for="summernote" class="form-label">Description</label>
-                    <textarea name="content" id="summernote" class="form-control" rows="5"  required></textarea>
+                    <textarea name="content" id="summernote" class="form-control" rows="5"  ></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="article_category" class="form-label">Category</label>
@@ -29,10 +29,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="article_image" class="form-label">Article image</label>
-                    <input type="file" name="image" id="article_image" class="form-control" required>
+                    <input type="file" name="image" id="article_image" class="form-control" >
                 </div>
-                <input type="submit" name="submit" class="btn btn-primary" value="Save" required />
+                <input type="submit" name="submit" class="btn btn-primary" value="Save"  />
               </form>
+           <%- include('../partials/error')%>
               <!--/Form -->
             </div>
           </div>

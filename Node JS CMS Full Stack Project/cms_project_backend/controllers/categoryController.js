@@ -1,5 +1,6 @@
 const categoryModel = require('../models/Category');
 const createError = require('../utils/error-message');
+const {validationResult} = require('express-validator');
 
 const allCategories = async (req, res,next) => {
     try {
@@ -15,11 +16,18 @@ const allCategories = async (req, res,next) => {
     
 };
 const addCategoryPage = async (req, res,next) => {
-    res.render('admin/category/create',{role:req.role})
+    res.render('admin/category/create',{role:req.role,errors:0})
 };
 const addCategory = async (req, res) => {
-       
+       const error = validationResult(req);
+    if (!error.isEmpty()) {
+        return res.status(400).render('admin/category/create', {
+            errors: error.array(),
+            role: req.role
+        });
+    }
     try {
+        
         await categoryModel.create(req.body);
         res.redirect('/admin/category');
     } catch (error) {
@@ -29,11 +37,11 @@ const addCategory = async (req, res) => {
     }
 };
 const updateCategoryPage = async (req, res,next) => {
+    const category = await categoryModel.findById(req.params.id);
     try {
-        const category = await categoryModel.findById(req.params.id);
         if (!category)  return next(createError('Category not found', 404));
         
-        res.render('admin/category/update', { category, role: req.role });
+        res.render('admin/category/update', { category, role: req.role,errors:0 });
     } catch (error) {
         // console.error('Error fetching category for update:', error);
         // res.status(500).send('Internal Server Error');
@@ -41,6 +49,17 @@ const updateCategoryPage = async (req, res,next) => {
     }
 };
 const updateCategory = async (req, res,next) => {
+     const category = await categoryModel.findById(req.params.id);
+     const error  = validationResult(req);
+    if (!error.isEmpty()) {
+        return res.status(400).render('admin/category/update', {
+            errors: error.array(),
+            role: req.role,
+            category: category
+
+        });
+    }
+
     try {
         const category = await categoryModel.findByIdAndUpdate(req.params.id, req.body);
         if (!category)  return next(createError('Category not found', 404));

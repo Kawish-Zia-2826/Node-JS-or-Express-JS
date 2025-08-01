@@ -17,7 +17,7 @@ const userController = require('../controllers/userController');
 // Login Route
 
 router.get('/',userController.loginPage);
-router.post('/index',validate.validate,userController.adminLogin);
+router.post('/index',validate.LoginValidator,userController.adminLogin);
 router.get('/logout',userController.logout);
 router.get('/dashboard',issLogedIn,userController.dashboard);
 router.get('/settings',issLogedIn,isAdmin,userController.setting);
@@ -26,9 +26,9 @@ router.post('/save-settings',issLogedIn,isAdmin,upload.single('website_logo'),us
 // Crud Route
 router.get('/users',issLogedIn,isAdmin,userController.allUsers);
 router.get('/add-user',issLogedIn,isAdmin,userController.addUserPage);
-router.post('/add-user',issLogedIn,isAdmin,userController.addUser);
+router.post('/add-user',issLogedIn,isAdmin,validate.userValidator,userController.addUser);
 router.get('/update-user/:id',issLogedIn,isAdmin,userController.updateUserPage);
-router.post('/update-user/:id',issLogedIn,isAdmin,userController.updateUser);
+router.post('/update-user/:id',issLogedIn,isAdmin,validate.updateUserValidator,userController.updateUser);
 router.delete('/delete-user/:id',issLogedIn,isAdmin,userController.deleteUser);
 
 
@@ -36,9 +36,9 @@ router.delete('/delete-user/:id',issLogedIn,isAdmin,userController.deleteUser);
 // category user
 router.get('/category',issLogedIn,isAdmin,categoryController.allCategories);
 router.get('/add-category',issLogedIn,isAdmin,categoryController.addCategoryPage);
-router.post('/add-category',issLogedIn,isAdmin,categoryController.addCategory);
+router.post('/add-category',issLogedIn,isAdmin,validate.categoryValidator,categoryController.addCategory);
 router.get('/update-category/:id',issLogedIn,isAdmin,categoryController.updateCategoryPage);
-router.post('/update-category/:id',issLogedIn,isAdmin,categoryController.updateCategory);
+router.post('/update-category/:id',issLogedIn,isAdmin,validate.updateCategoryValidator,categoryController.updateCategory);
 router.delete('/delete-category/:id',issLogedIn,isAdmin,categoryController.deleteCategory);
 
 
@@ -46,9 +46,9 @@ router.delete('/delete-category/:id',issLogedIn,isAdmin,categoryController.delet
 
 router.get('/article',issLogedIn,articalController.allArticles);
 router.get('/add-article',issLogedIn,articalController.addArticlePage);
-router.post('/add-article',upload.single('image'),issLogedIn,articalController.addArticle);
+router.post('/add-article',upload.single('image'),issLogedIn,validate.articalValidator,articalController.addArticle);
 router.get('/update-article/:id',issLogedIn,articalController.updateArticlePage);
-router.post('/update-article/:id',upload.single('image'),issLogedIn,articalController.updateArticle);
+router.post('/update-article/:id',upload.single('image'),issLogedIn,validate.articalValidator,articalController.updateArticle);
 router.delete('/delete-article/:id',issLogedIn,articalController.deleteArticle);
 
 
@@ -74,7 +74,7 @@ router.use(issLogedIn, (err, req, res, next) => {
        case 401:
             viw = 'admin/401';
            break;
-       case 403:
+       case 404:
             viw = 'admin/404';
            break;
        default:
@@ -82,9 +82,11 @@ router.use(issLogedIn, (err, req, res, next) => {
            
    }
    res.status(status).render(viw, {
+   layout: status === 404 ? false : undefined,
        message: err.message || 'Internal Server Error',
        role: req.role,
-       status
+       status,
+        
    });
   }); 
 

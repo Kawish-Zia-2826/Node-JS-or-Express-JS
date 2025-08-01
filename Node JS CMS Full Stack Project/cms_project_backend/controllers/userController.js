@@ -122,10 +122,20 @@ const allUsers = async (req, res) => {
     res.render('admin/users',{users,role:req.role});
 };
 const addUserPage = async (req, res) => {
-    res.render('admin/users/create',{role:req.role})
+    res.render('admin/users/create',{
+        role:req.role,
+        errors:0
+    })
 };
 const addUser = async (req, res,next) => {
+    const errors = validationResult(req);
 try {
+    if(!errors.isEmpty()) {
+        return res.status(400).render('admin/users/create',{
+            errors:errors.array(),
+            role:req.role
+        });
+    }
     await userModel.create(req.body);
     res.redirect('/admin/users');
 } catch (error) {
@@ -138,7 +148,7 @@ try {
 const updateUserPage = async (req, res,next) => {
     try {
         const users = await userModel.findById(req.params.id);
-        res.render('admin/users/update', { users ,role:req.role});
+        res.render('admin/users/update', { users ,role:req.role,errors:0});
         if(!users) return next(createError('User not found', 404)); 
     } catch (error) {
         // console.error('Error finding user:', error);
@@ -149,7 +159,17 @@ const updateUserPage = async (req, res,next) => {
 const updateUser = async (req, res,next) => {
     const id = req.params.id;
     const {fullname,usernamem,password} =  req.body;
+    const error = validationResult(req);
+    const users = await userModel.findById(req.params.id);
+
     try {
+        if(!error.isEmpty()) {
+            return res.status(400).render('admin/users/update',{
+                errors:error.array(),
+                role:req.role,
+                users
+            });
+        }
        const user = await userModel.findByIdAndUpdate(id)
         if(!user) return next(createError('User not found', 404));
         user.fullname = fullname || user.fullname;

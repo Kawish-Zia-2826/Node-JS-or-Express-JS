@@ -22,26 +22,18 @@
                           <form action="/admin/index" method="POST">
                             <div class="mb-3">
                                 <label class="form-label">Username</label>
-                                <input type="text" class="form-control" name="username" required>
+                                <input type="text" class="form-control" name="username" >
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control" name="password" required>
+                                <input type="password" class="form-control" name="password" >
                             </div>
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </div>
                           </form>
-                          <div class="alert alert-danger mt-3">
-
-                            <%if(errors.length > 0){%>
-
-                                <% errors.forEach(function(error){ %>
-                                    <p><%= error.msg %></p>
-                                <% }) %>
-                            <% } %>
+                         <%- include('partials/error')%>
                             
-                          </div>
                         </div>
                     </div>
                 </div>

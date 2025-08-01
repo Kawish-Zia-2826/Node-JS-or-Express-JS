@@ -4,6 +4,7 @@ const newsModel = require('../models/News');
 const fs = require('fs');
 const path = require('path');
 const createError = require('../utils/error-message');
+const {validationResult} = require('express-validator');
 
 const allArticles = async (req, res,next) => {
 let news;
@@ -36,13 +37,20 @@ let news;
 
 const addArticlePage = async (req, res,next) => {
     const categories = await CategoryModel.find();
-    res.render('admin/articles/create',{categories,role:req.role})
+    res.render('admin/articles/create',{categories,role:req.role,errors:0});
 };
-const addArticle = async (req, res) => {
+const addArticle = async (req, res,next) => {
     
     try {
 
-       
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render('admin/articles/create', {
+                errors: errors.array(),
+                role: req.role,
+                categories: await CategoryModel.find()
+            });
+        }
         const {title, content, category} = req.body;
         const news = new newsModel({
             title,
@@ -73,7 +81,7 @@ const updateArticlePage = async (req, res,next) => {
             }
         }
         const categories = await CategoryModel.find();
-        res.render('admin/articles/update',{article,categories,role:req.role})
+        res.render('admin/articles/update',{article,categories,role:req.role,errors:0})
     } catch (error) {
         // console.error('Error fetching article for update:', error);
         // res.status(500).send('Internal Server Error');
@@ -85,6 +93,16 @@ const updateArticlePage = async (req, res,next) => {
 };
 const updateArticle = async (req, res,next) => {
     const id = req.params.id;
+    const error  = validationResult(req);
+    if(!error.isEmpty()) {
+        return res.status(400).render('admin/articles/update',{
+            errors:error.array(),
+            role:req.role,
+            article: await newsModel.findById(id).populate('category','name').populate('author','fullname'),
+            categories: await CategoryModel.find()
+        });
+    }
+
     try {
         const article  = await newsModel.findById(id);
        if(!article)  return next(createError('Article not found', 404));
