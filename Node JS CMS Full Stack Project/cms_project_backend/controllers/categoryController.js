@@ -1,6 +1,7 @@
 const categoryModel = require('../models/Category');
 const createError = require('../utils/error-message');
 const {validationResult} = require('express-validator');
+const newsModel = require('../models/News');
 
 const allCategories = async (req, res,next) => {
     try {
@@ -37,8 +38,9 @@ const addCategory = async (req, res) => {
     }
 };
 const updateCategoryPage = async (req, res,next) => {
-    const category = await categoryModel.findById(req.params.id);
+    const id = req.params.id;
     try {
+        const category = await categoryModel.findById(id);
         if (!category)  return next(createError('Category not found', 404));
         
         res.render('admin/category/update', { category, role: req.role,errors:0 });
@@ -59,10 +61,13 @@ const updateCategory = async (req, res,next) => {
 
         });
     }
-
+    const id  = req.params.id;
     try {
-        const category = await categoryModel.findByIdAndUpdate(req.params.id, req.body);
-        if (!category)  return next(createError('Category not found', 404));
+        const category  = await categoryModel.findById(id);
+          if (!category)  return next(createError('Category not found', 404));
+        category.name = req.body.name;
+        category.description = req.body.description;
+        await category.save();
         res.redirect('/admin/category');
     } catch (error) {
         // console.error('Error updating category:', error);
@@ -74,9 +79,15 @@ const updateCategory = async (req, res,next) => {
     
 
 const deleteCategory = async (req, res,next) => {
+    const id = req.params.id;
     try {
-        await categoryModel.findByIdAndDelete(req.params.id);
-        res.json({ success: true, message: 'Category deleted successfully' });
+       const category  = await categoryModel.findById(id);
+        if (!category)  return next(createError('Category not found', 404));
+       const artical  = await newsModel.findOne({'category':id});
+        if(artical) return res.status(400).json({success:false,message:"Category has articles"});
+        await category.deleteOne();
+        res.json({message:"deleted successfully",success:true});
+
     } catch (error) {
         // console.error('Error deleting category:', error);
         // res.status(500).send('Internal Server Error');

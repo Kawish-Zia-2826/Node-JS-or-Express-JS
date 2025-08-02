@@ -46,6 +46,12 @@ async function deleteUser(id){
       const response = await fetch(`/admin/delete-user/${id}`, {
         method: 'delete'
       });
+      if(response.status == 404){
+        const data = await response.json();
+        alert(data.message);
+
+
+      }
       if(response.ok){
         window.location.reload();
       }
@@ -58,4 +64,3 @@ async function deleteUser(id){
 
 <%- contentFor('tabulatorCSS') %>
 <link href="https://unpkg.com/tabulator-tables@6.0.0/dist/css/tabulator.min.css" rel="stylesheet">
-<link href="/css/tabulator_bootstrap5.min.css" rel="stylesheet">

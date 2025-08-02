@@ -55,7 +55,7 @@ const categoryValidator = [
     .isLength({ min: 3, max: 30 }).withMessage('Category name must be between 3 and 30 characters long'),
     body('description').optional({checkFalsy:true}).trim().isLength({ min: 3, max: 100 }).withMessage('Description must be between 3 and 100 characters long')
     .isString().withMessage('Description must be a string'),
-  body('slug').notEmpty().trim()
+  
 ]
 
 const updateCategoryValidator = [

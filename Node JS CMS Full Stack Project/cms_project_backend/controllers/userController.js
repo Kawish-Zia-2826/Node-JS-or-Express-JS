@@ -195,8 +195,10 @@ const updateUser = async (req, res,next) => {
 const deleteUser = async (req, res,next) => {
     const id = req.params.id;
     try {
-        const user = await userModel.findByIdAndDelete(id);
+        const user = await userModel.findById(id);
         if (!user) return next(createError('User not found', 404));
+        const artical = await newsModel.findOne({'author':id});
+        if(artical) return res.status(404).json({message:"User has articles",success:false});
        res.json({success: true, message: 'User deleted successfully'});
     } catch (error) {
         // console.error('Error deleting user:', error);
