@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const CategoryModel = require('../models/Category');
 const userModel = require('../models/User');
 const newsModel = require('../models/News');
@@ -8,19 +7,54 @@ const CommentModel = require('../models/Comment');
 
 
 const index  = async(req,res)=>{
-    res.render('index')
+    const news  = await newsModel.find().populate('category',{'name':1,'slug':1}).populate('author','fullname').sort({createdAt:-1});
+
+    const catagoriesInUse =await newsModel.distinct('category');
+    const catagories = await CategoryModel.find({'_id':{$in:catagoriesInUse}});
+    res.render('index',{news,catagories})
 }
-const articleByCategories  = async(req,res)=>{
-    res.render('category')
+const articleByCategories  = async (req,res)=>{
+    const catageory = await CategoryModel.findOne({slug:req.params.name});
+    const catageoryName  = catageory.name;
+    if(!catageory) return next(createError('Category not found', 404));
+     const news  = await newsModel.find({category:catageory._id}).populate('category',{'name':1,'slug':1}).populate('author','fullname').sort({createdAt:-1});
+
+    const catagoriesInUse =await newsModel.distinct('category');
+    const catagories = await CategoryModel.find({'_id':{$in:catagoriesInUse}});
+    res.render('category',{news,catagories,catageoryName})
 }
 const singleArticle  = async(req,res)=>{
-    res.render('single')
+    
+    const singleNews  = await newsModel.findById(req.params.id).populate('category',{'name':1,'slug':1}).populate('author','fullname').sort({createdAt:-1});
+
+    const catagoriesInUse = await newsModel.distinct('category');
+    const catagories = await CategoryModel.find({'_id':{$in:catagoriesInUse}});
+    res.render('single',{singleNews,catagories})
+     
+    
 }
 const search  = async(req,res)=>{
-    res.render('search')
+    const searchQuery = req.query.search;
+    const news  = await newsModel.find({$or:[
+        {title:{$regex:searchQuery,$options:'i'}},
+        {content:{$regex:searchQuery,$options:'i'}}
+    ]}).populate('category',{'name':1,'slug':1}).populate('author','fullname').sort({createdAt:-1});
+    const categoryInUse  = await newsModel.distinct('category');
+
+    const catagories  =  await CategoryModel.find({'_id':{$in:categoryInUse}});
+     res.render('search',{news,catagories,searchQuery});
+
+    
 }
 const author  = async(req,res)=>{
-    res.render('author')
+    const author = await userModel.findById({req.params.id});
+    if(!author) return res.status(404).json({message:"Author not found"});
+   const news  = await newsModel.find({author:req.params.id}).populate('category',{'name':1,'slug':1}).populate('author','fullname').sort({createdAt:-1});
+  
+
+    const catagoriesInUse =await newsModel.distinct('category');
+    const catagories = await CategoryModel.find({'_id':{$in:catagoriesInUse}});
+    res.render('author',{news,catagories,author})
 }
 const addComment  = async(req,res)=>{
     res.render('addComment')
