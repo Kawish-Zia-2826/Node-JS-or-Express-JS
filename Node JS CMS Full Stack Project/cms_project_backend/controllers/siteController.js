@@ -4,6 +4,9 @@ const CategoryModel = require('../models/Category');
 const userModel = require('../models/User');
 const newsModel = require('../models/News');
 const CommentModel = require('../models/Comment');
+const settingModel = require('../models/Setting');
+const loadData=  require('../middleware/loadData');
+
 
 
 const index  = async(req,res)=>{
@@ -11,7 +14,11 @@ const index  = async(req,res)=>{
 
     const catagoriesInUse =await newsModel.distinct('category');
     const catagories = await CategoryModel.find({'_id':{$in:catagoriesInUse}});
-    res.render('index',{news,catagories})
+    
+    const setting = await settingModel.findOne();
+    const slidebar = await newsModel.find().populate('category',{'name':1,'slug':1}).populate('author','fullname').sort({createdAt:-1});
+    
+    res.render('index',{news,catagories,slidebar,setting})
 }
 const articleByCategories  = async (req,res)=>{
     const catageory = await CategoryModel.findOne({slug:req.params.name});
@@ -21,6 +28,9 @@ const articleByCategories  = async (req,res)=>{
 
     const catagoriesInUse =await newsModel.distinct('category');
     const catagories = await CategoryModel.find({'_id':{$in:catagoriesInUse}});
+
+
+  
     res.render('category',{news,catagories,catageoryName})
 }
 const singleArticle  = async(req,res)=>{
@@ -47,7 +57,7 @@ const search  = async(req,res)=>{
     
 }
 const author  = async(req,res)=>{
-    const author = await userModel.findById({req.params.id});
+    const author = await userModel.findById(req.params.id);
     if(!author) return res.status(404).json({message:"Author not found"});
    const news  = await newsModel.find({author:req.params.id}).populate('category',{'name':1,'slug':1}).populate('author','fullname').sort({createdAt:-1});
   
