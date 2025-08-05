@@ -56,6 +56,8 @@ router.delete('/delete-article/:id',issLogedIn,articalController.deleteArticle);
 
 
 router.get('/comments',issLogedIn,commentConroller.allComments);
+router.put('/update-comment/:id',issLogedIn,commentConroller.updateComment);
+router.delete('/delete-comment/:id',issLogedIn,commentConroller.deleteComment);
 
 
 //404 route

@@ -21,5 +21,45 @@
                          <%= singleNews.content.substring(0,30) + '...'%>
                       </p>
                     </div>
-                  </div>
+               
                   <!-- /post-container -->
+                   <!-- Comments Section -->
+                
+              </div>
+                   <div class="comments-section mt-5">
+                    <h3>Comments</h3>
+                    
+                    <!-- Comment Form -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form action="/single/<%= singleNews._id%>/comment" method="POST">
+                                <div class="mb-3">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Comment</label>
+                                    <textarea class="form-control" name="content" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit Comment</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Display Comments -->
+                    <div class="comments-list">
+                      <% comment.forEach(comment =>{%>
+                      <div class="card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-subtitle mb-2 text-muted"><%= comment.name%></h6>
+                          <p class="card-text"><%= comment.content%></p>
+                          <small class="text-muted"><%= comment.createAt%></small>
+                        </div>
+                      </div>
+                      <% }) %>
+                    </div>
+                </div>
