@@ -1,4 +1,4 @@
-<div id="sidebar" class="col-md-4">
+<div id="sidebar" >
   <!-- search box -->
   <div class="search-box-container">
       <h4>Search</h4>
@@ -21,7 +21,7 @@
               <img src="/uploads/<%= news.images%>" alt=""/>
           </a>
           <div class="post-content">
-              <h5><a href="/single/<%= news._id%>"><%= news.content%></a></h5>
+              <h5><a href="/single/<%= news._id%>"><%- news.content%></a></h5>
               <span>
                   <i class="fa fa-tags" aria-hidden="true"></i>
                   <a href='/category/<%= news.category.slug%>'><%= news.title%></a>

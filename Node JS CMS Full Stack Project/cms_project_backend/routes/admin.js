@@ -15,7 +15,7 @@ const commentConroller = require('../controllers/commnetController');
 const userController = require('../controllers/userController');
 
 // Login Route
-
+router.get('/signup-user',userController.signupPage);
 router.get('/',userController.loginPage);
 router.post('/index',validate.LoginValidator,userController.adminLogin);
 router.get('/logout',userController.logout);
@@ -56,17 +56,17 @@ router.delete('/delete-article/:id',issLogedIn,articalController.deleteArticle);
 
 
 router.get('/comments',issLogedIn,commentConroller.allComments);
-router.put('/update-comment/:id',issLogedIn,commentConroller.updateComment);
+router.put('/update-comment-status/:id',issLogedIn,commentConroller.updateComment);
 router.delete('/delete-comment/:id',issLogedIn,commentConroller.deleteComment);
 
 
 //404 route
 
-router.use(issLogedIn,(req,res,next)=>{
-    res.status(404).render('admin/404',
-      {message:"page not found",role:req.role,status:404}
-    );
-});
+// router.use((req,res,next)=>{
+//     res.status(404).render('admin/404',
+//       {message:"page not found",role:req.role,status:404}
+//     );
+// });
 
 
 router.use(issLogedIn, (err, req, res, next) => {

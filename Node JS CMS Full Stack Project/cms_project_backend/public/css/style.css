@@ -539,3 +539,9 @@ border: 3px solid var(--main-color);
 /* ===================== */
 /* FrontEnd CSS END */
 /* ===================== */
+
+
+
+.note-editor.note-frame.fullscreen{
+  background-color: white;
+}

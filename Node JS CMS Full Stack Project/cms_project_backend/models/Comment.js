@@ -5,7 +5,7 @@ const commentSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   content: { type: String, required: true },
-  status: { type: String, default: 'pending' },
+  status: { type: String, default: 'pending',enum:['pending','rejected','approved'],required: true },
   
 },{timestamps:true 
 

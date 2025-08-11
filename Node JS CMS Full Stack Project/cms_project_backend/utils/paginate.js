@@ -1,5 +1,5 @@
 const paginate = async(model,query={},reqQuery={},options={})=>{
-  const{page=1,limit=2,sort='-createdAt'} = reqQuery
+  const{page=1,limit=3,sort='-createdAt'} = reqQuery
   const paginateOptions={
     page:parseInt(page),
     limit:parseInt(limit),

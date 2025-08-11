@@ -72,7 +72,7 @@ const articalValidator = [
     .trim()
     .isLength({ min: 3, max: 100 }).withMessage('Title must be between 3 and 100 characters long'),
   body('content').notEmpty().withMessage('Content is required').trim()
-    .isLength({ min: 3, max: 5000 }).withMessage('Content must be between 3 and 5000 characters long'),
+    .isLength({ min: 3 }).withMessage('Content must be between 3 and 5000 characters long'),
   body('category').notEmpty().withMessage('Category is required')
     .isMongoId().withMessage('Invalid category ID'),
   

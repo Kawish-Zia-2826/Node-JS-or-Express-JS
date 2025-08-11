@@ -7,12 +7,13 @@ const CommentModel = require('../models/Comment');
 const settingModel = require('../models/Setting');
 const loadData=  require('../middleware/loadData');
 const paginate  = require('../utils/paginate');
+const createError  = require('../utils/error-message');
 
 
 const index  = async(req,res)=>{
     
-
-    const paginateData=await  paginate(newsModel,{},req.query,
+// return res.json(res.locals.setting);
+    const paginateData = await  paginate(newsModel,{},req.query,
         {
             populate:[
                 {path:'category',select:'name slug'},
@@ -42,13 +43,20 @@ const articleByCategories  = async (req,res)=>{
     )
     res.render('category',{paginateData,catageoryName,query:req.query})
 }
-const singleArticle  = async(req,res)=>{
+const singleArticle  = async(req,res,next)=>{
     
-    const singleNews  = await newsModel.findById(req.params.id).populate('category',{'name':1,'slug':1}).populate('author','fullname').sort({createdAt:-1});
+    try {
+        const singleNews  = await newsModel.findById(req.params.id).populate('category',{'name':1,'slug':1}).populate('author','fullname').sort({createdAt:-1});
+        if(!singleNews) return next(createError('News not found', 404));
 
-    const comment  = await CommentModel.find({article:req.params.id,status:'aproved'}).sort({createdAt:-1});
-    
-    res.render('single',{singleNews,comment});
+        const comment  = await CommentModel.find({article:req.params.id,status:'approved'}).sort({createdAt:-1});
+        
+        res.render('single',{singleNews,comment});
+    } catch (error) {
+        console.error('Error fetching single news:', error);
+        // res.status(500).send('Internal Server Error');
+        next(error)
+    }
      
     
 }

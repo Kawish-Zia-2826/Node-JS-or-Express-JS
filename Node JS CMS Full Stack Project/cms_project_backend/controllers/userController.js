@@ -10,10 +10,20 @@ const path = require('path');
 const fs = require('fs');
 const {validationResult} = require('express-validator');
 
+
+const signupPage = async (req,res)=>{
+    res.render('admin/signup',
+       { layout:false,
+        errors:0
+       }
+    )
+}
+
 const loginPage = async (req, res) => {
     res.render('admin/login',{
         layout:false,
-        errors:0
+        errors:0,
+        
     })
 };
 const adminLogin = async (req, res,next) => {
@@ -39,9 +49,8 @@ const {username, password} = req.body;
         res.cookie('token', token, {httpOnly:true,maxAge:1000* 60 * 60}); // 1 hour
         res.redirect('/admin/dashboard');
     } catch (error) {
-        // console.error('Error logging in user:', error.message);
-        // res.status(500).send('Internal Server Error');
-        next(error); // Pass the error to the next middleware
+        
+        next(error); 
     }
 
 };
@@ -211,6 +220,7 @@ const deleteUser = async (req, res,next) => {
 
 
 module.exports = {
+    signupPage,
     loginPage,
     adminLogin,
     logout,

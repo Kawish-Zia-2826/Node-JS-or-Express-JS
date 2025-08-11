@@ -26,9 +26,8 @@ let news;
 
         res.render('admin/articles/index',{news,role:req.role});
     } catch (error) {
-        // console.error('Error fetching articles:', error);
-        // res.status(500).send('Internal Server Error');
-        next(error); // Pass the error to the next middleware
+     
+        next(error);
     }
 
 
@@ -40,8 +39,7 @@ const addArticlePage = async (req, res,next) => {
     res.render('admin/articles/create',{categories,role:req.role,errors:0});
 };
 const addArticle = async (req, res,next) => {
-    
-    try {
+        try {
 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -62,8 +60,7 @@ const addArticle = async (req, res,next) => {
         await news.save();
         res.redirect('/admin/article');
     } catch (error) {
-        // console.error('Error creating article:', error);
-        // res.status(500).send('Internal Server Error ' + error.message);
+       
         next(error);
     }
 };
