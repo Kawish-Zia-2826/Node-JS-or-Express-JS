@@ -41,7 +41,7 @@ app.set('view engine', 'ejs');
 
 
 
-
+// monoggose connection here
 mongoose.connect(
     process.env.MONGODB_URI || 'mongodb://localhost:27017/cms_project'
 ).then(() => {
