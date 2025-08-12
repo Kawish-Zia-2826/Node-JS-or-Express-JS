@@ -16,6 +16,7 @@ const userController = require('../controllers/userController');
 
 // Login Route
 router.get('/signup-user',userController.signupPage);
+router.post('/signUp',validate.signUpValidator,userController.signUp,);
 router.get('/',userController.loginPage);
 router.post('/index',validate.LoginValidator,userController.adminLogin);
 router.get('/logout',userController.logout);

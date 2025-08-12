@@ -19,6 +19,22 @@ const signupPage = async (req,res)=>{
     )
 }
 
+const signUp = async(req,res)=>{
+
+    const error = validationResult(req)
+    
+    if(!error.isEmpty()){
+        
+        return res.status(404).render('admin/signup',{
+            error:error.array(),
+            layout:false
+        });
+    }
+    const {fullname,username,password}  = req.body;
+    
+    
+}
+
 const loginPage = async (req, res) => {
     res.render('admin/login',{
         layout:false,
@@ -220,6 +236,7 @@ const deleteUser = async (req, res,next) => {
 
 
 module.exports = {
+    signUp,
     signupPage,
     loginPage,
     adminLogin,

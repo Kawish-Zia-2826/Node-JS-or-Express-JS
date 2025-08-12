@@ -1,10 +1,22 @@
 const {body}  = require('express-validator');
 
+
 const LoginValidator =[
-  body('username').matches(/^[a-zA-Z0-9_]{3,30}$/).withMessage('Invalid username format')
- .trim().withMessage('Username cannot be empty')
-.notEmpty().withMessage('Username is required')
-.isLength({ min: 3, max: 30 }).withMessage('Username must be between 3 and 30 characters long')
+  body(['username']).matches(/^[a-zA-Z0-9_]{3,30}$/).withMessage('Invalid username format')
+ .trim().withMessage('field cannot be empty')
+.notEmpty().withMessage('field is required')
+.isLength({ min: 3, max: 30 }).withMessage('field must be between 3 and 30 characters long')
+,
+body('password')
+.trim()
+.notEmpty().withMessage('Password is required')
+.isLength({ min: 3 ,max:8 }).withMessage('Password must be at least 8 characters long')
+];
+const signUpValidator =[
+  body(['fullname','username']).matches(/^[a-zA-Z0-9_]{3,30}$/).withMessage('Invalid username format')
+ .trim().withMessage('field cannot be empty')
+.notEmpty().withMessage('field is required')
+.isLength({ min: 3, max: 30 }).withMessage('field must be between 3 and 30 characters long')
 ,
 body('password')
 .trim()
@@ -82,11 +94,11 @@ const articalValidator = [
 
 
 module.exports = {
+  signUpValidator,
   LoginValidator,
   categoryValidator,
   updateCategoryValidator,
   articalValidator,
-  
-  userValidator,
+    userValidator,
   updateUserValidator
 };
