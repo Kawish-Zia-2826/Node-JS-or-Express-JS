@@ -19,19 +19,26 @@ const signupPage = async (req,res)=>{
     )
 }
 
-const signUp = async(req,res)=>{
+const signUp = async(req,res,next)=>{
+try{
 
     const error = validationResult(req)
     
     if(!error.isEmpty()){
         
         return res.status(404).render('admin/signup',{
-            error:error.array(),
+            erros:error.array(),
             layout:false
         });
     }
-    const {fullname,username,password}  = req.body;
-    
+   const author = await userModel.create(req.body);
+    if(author){
+        console.log('user created sucefully')
+    }
+    res.redirect('admin/')
+}catch(error){
+next(error)
+}
     
 }
 
@@ -246,8 +253,8 @@ module.exports = {
     addUser,
     updateUserPage,
     updateUser,
-    deleteUser,
     dashboard,
     setting,
+    deleteUser,
     saveSetting
 };
