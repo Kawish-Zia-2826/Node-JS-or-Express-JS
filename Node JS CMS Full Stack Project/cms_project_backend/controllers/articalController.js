@@ -5,6 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const createError = require('../utils/error-message');
 const {validationResult} = require('express-validator');
+const cloudinary = require('cloudinary').v2
+const dotenv = require('dotenv').config();
 
 const allArticles = async (req, res,next) => {
 let news;
@@ -49,6 +51,16 @@ const addArticle = async (req, res,next) => {
                 categories: await CategoryModel.find()
             });
         }
+           cloudinary.config({ 
+        cloud_name: process.env.CLOUD_NAME, 
+        api_key: process.env.API_KEY, 
+        api_secret:process.env.API_SECRET
+    });
+    cloudinary.uploader
+  .upload("../public/images/news.jpg")
+  .then(result=>console.log(result));
+
+ 
         const {title, content, category} = req.body;
         const news = new newsModel({
             title,
@@ -57,6 +69,10 @@ const addArticle = async (req, res,next) => {
             images: req.file.filename,
             author: req.id
         });
+
+
+
+
         await news.save();
         res.redirect('/admin/article');
     } catch (error) {
