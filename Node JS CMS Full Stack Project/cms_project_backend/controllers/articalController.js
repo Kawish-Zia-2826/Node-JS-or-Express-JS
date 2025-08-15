@@ -1,12 +1,13 @@
+const fs = require('fs');
+const cloudinary = require('../utils/cloudnary.js');
+const path = require('path');
 const CategoryModel = require('../models/Category');
 const userModel = require('../models/User');
 const newsModel = require('../models/News');
-const fs = require('fs');
-const path = require('path');
 const createError = require('../utils/error-message');
 const {validationResult} = require('express-validator');
-const cloudinary = require('cloudinary').v2
-const dotenv = require('dotenv').config();
+
+
 
 const allArticles = async (req, res,next) => {
 let news;
@@ -40,9 +41,8 @@ const addArticlePage = async (req, res,next) => {
     const categories = await CategoryModel.find();
     res.render('admin/articles/create',{categories,role:req.role,errors:0});
 };
-const addArticle = async (req, res,next) => {
-        try {
-
+const addArticle = async (req, res, next) => {
+    try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).render('admin/articles/create', {
@@ -51,32 +51,32 @@ const addArticle = async (req, res,next) => {
                 categories: await CategoryModel.find()
             });
         }
-           cloudinary.config({ 
-        cloud_name: process.env.CLOUD_NAME, 
-        api_key: process.env.API_KEY, 
-        api_secret:process.env.API_SECRET
-    });
-    cloudinary.uploader
-  .upload("../public/images/news.jpg")
-  .then(result=>console.log(result));
 
- 
-        const {title, content, category} = req.body;
+        if (!req.file) {
+            return res.status(400).send("Image file is required");
+        }
+
+        const filePath = path.join(__dirname, `../public/uploads/${req.file.filename}`);
+        const result = await cloudinary.uploader.upload(filePath, {
+            folder: "articles"
+        });
+
+        // Optional: delete local file after upload
+        fs.unlinkSync(filePath);
+
+        const { title, content, category } = req.body;
         const news = new newsModel({
             title,
             content,
             category,
-            images: req.file.filename,
+            images: result.secure_url, // Store Cloudinary URL
             author: req.id
         });
 
-
-
-
         await news.save();
         res.redirect('/admin/article');
+
     } catch (error) {
-       
         next(error);
     }
 };
