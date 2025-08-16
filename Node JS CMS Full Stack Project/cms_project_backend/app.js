@@ -7,26 +7,26 @@ const flash = require('connect-flash');
 const path = require('path');
 const expressLayouts = require('express-ejs-layouts'); 
 dotenv.config();
-// var minifyHTML = require('express-minify-html-terser');
-// var compression = require('compression');
+var minifyHTML = require('express-minify-html-terser');
+var compression = require('compression');
 
-// app.use(compression({
-//     level:9,
-//     threshold:10*1024
-// }));
+app.use(compression({
+    level:9,
+    threshold:10*1024
+}));
 
-// app.use(minifyHTML({
-//     override:      true,
-//     exception_url: false,
-//     htmlMinifier: {
-//         removeComments:            true,
-//         collapseWhitespace:        true,
-//         collapseBooleanAttributes: true,
-//         removeAttributeQuotes:     true,
-//         removeEmptyAttributes:     true,
-//         minifyJS:                  true
-//     }
-// }));
+app.use(minifyHTML({
+    override:      true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments:            true,
+        collapseWhitespace:        true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes:     true,
+        removeEmptyAttributes:     true,
+        minifyJS:                  true
+    }
+}));
 // Middleware
 app.use(cookieParser());
 app.use(express.json({limit:'10mb'}));

@@ -20,11 +20,15 @@ const newSchema = new mongoose.Schema({
   ref: 'User',
   required: true
 },
-    images: {
+images: {
         type: String,
         required: true
-    },
-    createAt: {
+},
+public_id:{
+        type:String,
+        required:true
+},
+createAt: {
         type: Date,
         default: Date.now
     }

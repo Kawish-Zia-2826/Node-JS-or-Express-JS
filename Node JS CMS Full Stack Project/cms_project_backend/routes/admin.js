@@ -63,11 +63,11 @@ router.delete('/delete-comment/:id',issLogedIn,commentConroller.deleteComment);
 
 //404 route
 
-// router.use((req,res,next)=>{
-//     res.status(404).render('admin/404',
-//       {message:"page not found",role:req.role,status:404}
-//     );
-// });
+router.use((req,res,next)=>{
+    res.status(404).render('admin/404',
+      {message:"page not found",role:req.role,status:404}
+    );
+});
 
 
 router.use(issLogedIn, (err, req, res, next) => {

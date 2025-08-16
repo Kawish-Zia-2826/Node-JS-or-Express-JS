@@ -18,7 +18,7 @@
      <% slidebar.forEach((news) => {%> 
      <div class="recent-post">
           <a class="post-img" href="">
-              <img src="/uploads/<%= news.images%>" alt=""/>
+              <img src="<%= news.images%>" alt=""/>
           </a>
           <div class="post-content">
               <h5><a href="/single/<%= news._id%>"><%- news.content%></a></h5>

@@ -9,36 +9,36 @@ const settingModel = require('../models/Setting');
 
 const loadData  =async (req,res,next)=>{
     try{
-//         let catagories =  myCache.get('catagoriesCache');
-//         let setting =  myCache.get('settingCache');
-//         let slidebar =  myCache.get('latestNewsCache');
+        let catagories =  myCache.get('catagoriesCache');
+        let setting =  myCache.get('settingCache');
+        let slidebar =  myCache.get('latestNewsCache');
 
-//         if (!(catagories && setting && slidebar)) {
-//     const catagoriesInUse = await newsModel.distinct('category');
-//     catagories = await CategoryModel.find({ '_id': { $in: catagoriesInUse } }).lean();
-//     setting = await settingModel.findOne().lean();
-//     slidebar = await newsModel.find()
-//         .populate('category', { 'name': 1, 'slug': 1 })
-//         .populate('author', 'fullname').limit(3)
-//         .sort({ createdAt: -1 })
-//         .lean();
-
-//     myCache.set('catagoriesCache', catagories, 3600);
-//     myCache.set('settingCache', setting, 3600);
-//     myCache.set('latestNewsCache', slidebar, 3600);
-// }
-
-
-  const catagoriesInUse = await newsModel.distinct('category');
-    let catagories = await CategoryModel.find({ '_id': { $in: catagoriesInUse } })
-    // .lean();
-    let setting = await settingModel.findOne()
-    // .lean();
-    let slidebar = await newsModel.find()
+        if (!(catagories && setting && slidebar)) {
+    const catagoriesInUse = await newsModel.distinct('category');
+    catagories = await CategoryModel.find({ '_id': { $in: catagoriesInUse } }).lean();
+    setting = await settingModel.findOne().lean();
+    slidebar = await newsModel.find()
         .populate('category', { 'name': 1, 'slug': 1 })
         .populate('author', 'fullname').limit(3)
         .sort({ createdAt: -1 })
-        // .lean();
+        .lean();
+
+    myCache.set('catagoriesCache', catagories, 3600);
+    myCache.set('settingCache', setting, 3600);
+    myCache.set('latestNewsCache', slidebar, 3600);
+}
+
+
+  const catagoriesInUse = await newsModel.distinct('category');
+     catagories = await CategoryModel.find({ '_id': { $in: catagoriesInUse } })
+    .lean();
+     setting = await settingModel.findOne()
+    .lean();
+     slidebar = await newsModel.find()
+        .populate('category', { 'name': 1, 'slug': 1 })
+        .populate('author', 'fullname').limit(3)
+        .sort({ createdAt: -1 })
+        .lean();
 
     
 

@@ -8,6 +8,10 @@ const setting = mongoose.Schema({
       type: String,
       
   },
+  public_id:{
+      type: String,
+      required: true
+  },
   footer_description:{
       type: String,
       required: true

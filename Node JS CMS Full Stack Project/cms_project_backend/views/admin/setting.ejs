@@ -21,7 +21,7 @@
                               <label for="website_logo" class="form-label">Upload Logo</label>
                               <br>
                               <% if(settings.website_logo && settings.website_logo.trim() !== '') { %>
-                                <img src="/uploads/<%= settings.website_logo %>" class="w-25 mb-3">
+                                <img src="<%= settings.website_logo %>" class="w-25 mb-3">
                               <% } %>     
                               <input type="file" name="website_logo" class="form-control">
                           </div>

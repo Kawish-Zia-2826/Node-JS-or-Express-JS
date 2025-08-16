@@ -60,11 +60,11 @@ const singleArticle  = async(req,res,next)=>{
      
     
 }
-const search  = async(req,res)=>{
+const search  = async(req,res,next)=>{
     const searchQuery = req.query.search;
   
 
-    const paginateData=await  paginate(newsModel,{$or:[
+    const paginateDatan = await  paginate(newsModel,{$or:[
         {title:{$regex:searchQuery,$options:'i'}},
         {content:{$regex:searchQuery,$options:'i'}}
     ]},req.query,
@@ -76,6 +76,9 @@ const search  = async(req,res)=>{
         },
         {sort:'-createdAt'} 
     )
+    if(paginateDatan.data.length < 0){
+        next(createError('News not found', 404));
+    }
      res.render('search',{paginateData,searchQuery,query:req.query});
 
      

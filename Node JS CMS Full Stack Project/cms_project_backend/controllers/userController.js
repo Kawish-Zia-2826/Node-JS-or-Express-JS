@@ -9,6 +9,7 @@ const createError = require('../utils/error-message');
 const path = require('path');
 const fs = require('fs');
 const {validationResult} = require('express-validator');
+const cloudinary = require('../utils/cloudnary.js')
 
 
 const signupPage = async (req,res)=>{
@@ -106,45 +107,71 @@ const countUsers = await userModel.countDocuments();
 
 const setting = async (req,res,next)=>{
 
-    // res.send(await Setting.findOne())
+    
        try {
         const settings = await Setting.findOne();
         res.render('admin/setting',{role:req.role,settings});
     } catch (error) {
-        // console.error('Error fetching setting:', error);
-        // res.status(500).send('Internal Server Error');
-        next(error); // Pass the error to the next middleware
+  
+      
+        next(error); 
     }
 }
 
 const saveSetting = async (req, res, next) => {
     try {
         const { website_title, footer_description } = req.body;
-        let website_logo = req.file ? req.file.filename : null;
+        let website_logo = null;
+        let public_id = null;
 
-        // 🛑 Get current setting first (before update)
         const currentSetting = await Setting.findOne();
 
-        const setting = await Setting.findOneAndUpdate(
+        if (req.file) {
+            const filePath = path.join(__dirname, "../public/uploads", req.file.filename);
+
+            // Agar pehle se Cloudinary par logo hai, to overwrite karein
+            if (currentSetting?.public_id) {
+                const uploadResult = await cloudinary.uploader.upload(filePath, {
+                    public_id: currentSetting.public_id, // overwrite existing
+                    overwrite: true,
+                    invalidate: true
+                });
+                website_logo = uploadResult.secure_url;
+                public_id = uploadResult.public_id;
+            } else {
+                // Naya upload
+                const uploadResult = await cloudinary.uploader.upload(filePath, {
+                    folder: "settings" // optional
+                });
+                website_logo = uploadResult.secure_url;
+                public_id = uploadResult.public_id;
+            }
+
+            // Local file delete (server par space bachane ke liye)
+            fs.unlinkSync(filePath);
+        } else {
+            // Agar naya file nahi hai to purana data use karo
+            website_logo = currentSetting?.website_logo;
+            public_id = currentSetting?.public_id;
+        }
+
+        // DB me upsert
+        await Setting.findOneAndUpdate(
             {},
-            { website_title, footer_description, website_logo: website_logo || currentSetting?.website_logo },
+            {
+                website_title,
+                footer_description,
+                website_logo,
+                public_id
+            },
             { new: true, upsert: true }
         );
 
-        // ✅ Delete old logo if new one uploaded
-        if (website_logo && currentSetting && currentSetting.website_logo) {
-            const oldPath = path.join(__dirname, '../public/uploads', currentSetting.website_logo);
-            if (fs.existsSync(oldPath)) {
-                fs.unlinkSync(oldPath);
-            }
-        }
-
-        res.redirect('/admin/settings');
+        res.redirect("/admin/settings");
     } catch (error) {
         next(error);
     }
 };
-
 
 
 const allUsers = async (req, res) => {
@@ -171,8 +198,7 @@ try {
     await userModel.create(req.body);
     res.redirect('/admin/users');
 } catch (error) {
-    // console.error('Error adding user:', error);
-    // res.status(500).send('Internal Server Error');
+    
     next(error);
 }
 
@@ -183,8 +209,7 @@ const updateUserPage = async (req, res,next) => {
         res.render('admin/users/update', { users ,role:req.role,errors:0});
         if(!users) return next(createError('User not found', 404)); 
     } catch (error) {
-        // console.error('Error finding user:', error);
-        // res.status(500).send('Internal Server Error');
+        
         next(error);
     }
     };
@@ -216,8 +241,7 @@ const updateUser = async (req, res,next) => {
 
 
     } catch (error) {
-        // console.error('Error updating user:', error);
-        // res.status(500).send('Internal Server Error');
+        
         next(error);
     }
     
@@ -233,8 +257,7 @@ const deleteUser = async (req, res,next) => {
         if(artical) return res.status(404).json({message:"User has articles",success:false});
        res.json({success: true, message: 'User deleted successfully'});
     } catch (error) {
-        // console.error('Error deleting user:', error);
-        // res.status(500).send('Internal Server Error');
+       
         next(error); 
     }
 
